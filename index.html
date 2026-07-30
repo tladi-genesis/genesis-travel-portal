@@ -1,0 +1,591 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.portal{font-family:var(--font-sans);background:var(--surface-0);color:var(--text-primary);min-height:600px}
+.topbar{background:#1a1a2e;padding:10px 20px;display:flex;align-items:center;gap:10px}
+.logo-g{background:#4ade80;color:#1a1a2e;font-weight:700;font-size:12px;padding:2px 6px;border-radius:3px}
+.logo-text{color:#fff;font-size:12px;font-weight:500;letter-spacing:0.5px}
+.bc{color:#aaa;font-size:12px;margin-left:2px}
+.tb-btns{margin-left:auto;display:flex;gap:8px}
+.tb-btn{background:transparent;border:0.5px solid #444;color:#ccc;border-radius:var(--radius);padding:4px 10px;font-size:11px;cursor:pointer;font-family:var(--font-sans)}
+.tb-btn:hover{background:#2a2a3e;color:#fff}
+.tb-btn.green{background:#16a34a;border-color:#16a34a;color:#fff}
+.main{max-width:740px;margin:0 auto;padding:28px 16px}
+.page{display:none}.page.active{display:block}
+.card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
+.section-title{font-size:15px;font-weight:500;margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.section-sub{font-size:12px;color:var(--text-secondary);margin-bottom:18px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-row.full{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:11px;font-weight:500;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.4px}
+.field input,.field select,.field textarea{width:100%;padding:8px 11px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--surface-2);color:var(--text-primary);font-size:13px;font-family:var(--font-sans)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--border-accent)}
+.req{color:var(--text-danger)}
+.nav-btns{display:flex;justify-content:space-between;margin-top:6px}
+.btn{padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:var(--font-sans)}
+.btn-back{background:var(--surface-1);color:var(--text-primary);border:0.5px solid var(--border)}
+.btn-next{background:#1a1a2e;color:#fff}
+.btn-green{background:#16a34a;color:#fff}
+.btn-danger{background:#dc2626;color:#fff}
+.prow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.ptitle{font-size:18px;font-weight:500}
+.pstep{font-size:12px;color:var(--text-secondary)}
+.stepper{display:flex;align-items:center;margin-bottom:24px}
+.st{display:flex;flex-direction:column;align-items:center;flex:1}
+.sc{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;position:relative;z-index:1}
+.sc.done{background:#16a34a;color:#fff}
+.sc.active{background:#1a1a2e;color:#fff}
+.sc.todo{background:var(--surface-1);color:var(--text-muted);border:0.5px solid var(--border)}
+.sn{font-size:11px;margin-top:5px;color:var(--text-secondary);text-align:center}
+.sn.active{color:var(--text-primary);font-weight:500}
+.sl{flex:1;height:2px;background:var(--border);margin-top:-17px;position:relative;top:-8px}
+.sl.done{background:#16a34a}
+.info-ban{background:#eff6ff;border:0.5px solid #bfdbfe;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:#1d4ed8;margin-bottom:18px;display:flex;gap:7px;align-items:flex-start}
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.comp-card{border:1.5px solid var(--border);border-radius:10px;padding:12px;cursor:pointer}
+.comp-card.sel{border-color:#16a34a;background:#f0fdf4}
+.comp-name{font-size:13px;font-weight:500;margin:4px 0 2px}
+.comp-desc{font-size:11px;color:var(--text-secondary)}
+.comp-status{font-size:11px;margin-top:3px}
+.comp-card.sel .comp-status{color:#16a34a;font-weight:500}
+.comp-card:not(.sel) .comp-status{color:var(--text-muted)}
+.agency-ban{background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:#166534;display:flex;align-items:center;gap:6px}
+.chk-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:10px;cursor:pointer}
+.risk-item{display:flex;gap:10px;background:var(--surface-1);border-radius:var(--radius);padding:11px;margin-bottom:8px}
+.risk-label{font-size:13px;font-weight:500;margin-bottom:2px}
+.risk-desc{font-size:11px;color:var(--text-secondary)}
+.sum-box{background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:var(--radius);padding:13px;margin-bottom:14px}
+.sum-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
+.sum-label{color:var(--text-secondary)}
+.quote-header{background:#1a1a2e;border-radius:12px 12px 0 0;padding:16px 20px;margin:-22px -22px 20px}
+.quote-header .qh-label{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px}
+.quote-header .qh-name{font-size:18px;font-weight:500;color:#fff}
+.quote-header .qh-sub{font-size:12px;color:#aaa}
+.req-sum{background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:var(--radius);padding:14px;margin-bottom:18px}
+.req-sum .rs-label{font-size:10px;font-weight:500;color:#16a34a;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
+.rs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rs-field .rf-label{font-size:10px;color:#5f855f;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px}
+.rs-field .rf-val{font-size:13px;font-weight:500;color:#14532d}
+.ref-badge{display:inline-block;background:#dcfce7;border:0.5px solid #86efac;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:500;color:#166534;font-family:var(--font-mono)}
+.opt-block{border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+.opt-label{font-size:10px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:12px}
+.upload-zone{border:1px dashed var(--border-strong);border-radius:var(--radius);padding:18px;text-align:center;color:var(--text-secondary);font-size:12px;cursor:pointer;margin-top:8px}
+.upload-zone i{font-size:20px;display:block;margin-bottom:6px}
+.add-opt-btn{background:transparent;border:0.5px solid var(--border-success);color:var(--text-success);border-radius:var(--radius);padding:7px 14px;font-size:12px;cursor:pointer;margin-bottom:10px;font-family:var(--font-sans)}
+.submit-btn{background:#16a34a;color:#fff;border:none;border-radius:var(--radius);padding:8px 20px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
+.mgr-header{background:#1a1a2e;border-radius:12px 12px 0 0;padding:14px 20px;margin:-22px -22px 20px}
+.mgr-badge{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.mgr-title{font-size:17px;font-weight:500;color:#fff}
+.mgr-ref{display:inline-block;background:#2d4a2d;border:0.5px solid #4a7a4a;border-radius:4px;padding:2px 8px;font-size:11px;color:#86efac;font-family:var(--font-mono);margin-top:6px}
+.req-det{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+.rd-field .rd-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px}
+.rd-field .rd-val{font-size:13px;font-weight:500}
+.quotes-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.quotes-title{font-size:15px;font-weight:500}
+.override-note{font-size:11px;color:var(--text-danger)}
+.quotes-sub{font-size:12px;color:var(--text-secondary);margin-bottom:14px}
+.q-card{border:0.5px solid var(--border);border-radius:var(--radius);padding:13px;margin-bottom:10px}
+.q-card.selected{border-color:#16a34a;background:#f0fdf4}
+.q-card.mgr-sel{border-color:#3b82f6;background:#eff6ff}
+.q-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+.q-agency{font-size:13px;font-weight:500}
+.q-price{font-size:15px;font-weight:500}
+.q-card.selected .q-price{color:#16a34a}
+.q-card.mgr-sel .q-price{color:#1d4ed8}
+.q-badges{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.badge-opt{background:var(--surface-1);color:var(--text-secondary);border:0.5px solid var(--border)}
+.badge-tc{background:#fef9c3;color:#854d0e}
+.badge-alt{background:var(--surface-1);color:var(--text-secondary)}
+.badge-ms{background:#dbeafe;color:#1e40af}
+.badge-sel{background:#dcfce7;color:#166534}
+.q-desc{font-size:12px;color:var(--text-primary);margin-bottom:4px}
+.q-note{font-size:11px;color:var(--text-secondary);font-style:italic;margin-bottom:4px}
+.q-co2{font-size:11px;color:#16a34a}
+.q-sel-check{font-size:11px;color:#16a34a;font-weight:500}
+.q-sel-check.blue{color:#1d4ed8}
+.sel-btn{background:transparent;border:0.5px solid var(--border);color:var(--text-secondary);border-radius:var(--radius);padding:5px 12px;font-size:11px;cursor:pointer;font-family:var(--font-sans)}
+.sel-btn:hover{border-color:#3b82f6;color:#1d4ed8}
+.mgr-actions{display:flex;gap:10px;margin-top:6px}
+.login-wrap{min-height:500px;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:16px;padding:36px 32px;width:100%;max-width:420px;text-align:center}
+.login-icon{font-size:36px;margin-bottom:14px;color:#16a34a}
+.login-title{font-size:20px;font-weight:500;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--text-secondary);margin-bottom:24px}
+.email-input-row{display:flex;border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:6px}
+.email-input-row input{border:none;background:var(--surface-2);color:var(--text-primary);padding:9px 12px;font-size:13px;font-family:var(--font-sans);flex:1;outline:none}
+.email-suffix{background:var(--surface-1);border-left:0.5px solid var(--border);padding:9px 10px;font-size:12px;color:var(--text-secondary);white-space:nowrap}
+.email-label{font-size:11px;font-weight:500;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.4px;text-align:left;margin-bottom:6px}
+.continue-btn{background:#16a34a;color:#fff;border:none;border-radius:var(--radius);width:100%;padding:10px;font-size:14px;font-weight:500;cursor:pointer;margin-top:14px;font-family:var(--font-sans)}
+.fill-link{font-size:12px;color:var(--text-secondary);margin-top:12px}
+.fill-link a{color:#16a34a;cursor:pointer;text-decoration:none}
+</style>
+
+<h2 class="sr-only">Genesis Corporate Travel Portal — full portal with login, 4-step new request form, agent quote submission, and manager approval views</h2>
+
+<div class="portal">
+  <div class="topbar">
+    <span class="logo-g">G:</span>
+    <span class="logo-text">GENESIS</span>
+    <span class="bc">→ Corporate Travel Portal</span>
+    <div class="tb-btns">
+      <button class="tb-btn green" onclick="showView('login')"><i class="ti ti-plus" aria-hidden="true"></i> New Request</button>
+      <button class="tb-btn" onclick="alert('Search by reference number')"><i class="ti ti-search" aria-hidden="true"></i> Search Ref</button>
+      <button class="tb-btn" onclick="alert('Booking history')"><i class="ti ti-history" aria-hidden="true"></i> History</button>
+      <button class="tb-btn" onclick="toggleAdmin()"><i class="ti ti-settings" aria-hidden="true"></i> Admin</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="page active" id="view-login">
+      <div class="login-wrap">
+        <div class="login-card">
+          <div class="login-icon"><i class="ti ti-plane-tilt" aria-hidden="true"></i></div>
+          <div class="login-title">New Travel Request</div>
+          <div class="login-sub">Enter your Genesis username below. We'll look up your details from your most recent booking to save you time.</div>
+          <div class="email-label">Genesis Email Address <span class="req">*</span></div>
+          <div class="email-input-row">
+            <input type="text" placeholder="firstname.lastname" id="login-username">
+            <div class="email-suffix">@genesis-analytics.com</div>
+          </div>
+          <button class="continue-btn" onclick="startRequest()">Continue →</button>
+          <div class="fill-link">First time here or not in the system? <a onclick="startRequestManual()">Fill in manually</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="view-request">
+      <div class="prow"><div class="ptitle">New Travel Request</div><div class="pstep" id="step-counter">Step 1 of 4</div></div>
+      <div class="stepper" id="stepper" style="margin-top:14px">
+        <div class="st"><div class="sc active" id="sc1">1</div><div class="sn active" id="sn1">Traveller Details</div></div>
+        <div class="sl" id="sl1"></div>
+        <div class="st"><div class="sc todo" id="sc2">2</div><div class="sn" id="sn2">Travel Details</div></div>
+        <div class="sl" id="sl2"></div>
+        <div class="st"><div class="sc todo" id="sc3">3</div><div class="sn" id="sn3">Preferences</div></div>
+        <div class="sl" id="sl3"></div>
+        <div class="st"><div class="sc todo" id="sc4">4</div><div class="sn" id="sn4">Risk and Submit</div></div>
+      </div>
+
+      <div id="rpage1">
+        <div class="card">
+          <div class="section-title"><i class="ti ti-user" aria-hidden="true" style="font-size:16px"></i> Traveller Details</div>
+          <div class="section-sub">Who is travelling and what is the purpose of this trip?</div>
+          <div class="info-ban"><i class="ti ti-info-circle" aria-hidden="true" style="font-size:15px;flex-shrink:0"></i><span>No previous travel requests found for <strong id="disp-email">user@genesis-analytics.com</strong> — please fill in all fields below.</span></div>
+          <div class="form-row">
+            <div class="field"><label>Full Name <span class="req">*</span></label><input type="text" placeholder="e.g. Jane Smith" id="f-name"></div>
+            <div class="field"><label>Work Email</label><input type="text" id="f-email" value="user@genesis-analytics.com"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label>Employee Grade <span class="req">*</span></label><select id="f-grade"><option value="">Select grade...</option><option>Analyst</option><option>Senior Analyst</option><option>Consultant</option><option>Senior Consultant</option><option>Manager</option><option>Associate Director</option><option>Director</option><option>Partner</option></select></div>
+            <div class="field"><label>Line / Project Manager <span class="req">*</span></label><input type="text" placeholder="Approving manager name" id="f-manager"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label>Manager Email <span class="req">*</span></label><input type="email" placeholder="manager@genesis.com" id="f-mgr-email"></div>
+            <div class="field"><label>Trip Purpose</label><input type="text" placeholder="e.g. Client kick-off – Project Alpha" id="f-purpose"></div>
+          </div>
+          <div class="form-row full"><div class="field"><label>Project / Cost Code</label><input type="text" placeholder="e.g. PRJ-2025-042" id="f-code"></div></div>
+        </div>
+        <div class="card">
+          <div class="section-title"><i class="ti ti-id" aria-hidden="true" style="font-size:16px"></i> Passport Details</div>
+          <div class="section-sub">Required for international travel bookings.</div>
+          <div class="form-row">
+            <div class="field"><label>Passport Number</label><input type="text" placeholder="e.g. A12345678"></div>
+            <div class="field"><label>Issuing Country</label><input type="text" placeholder="e.g. South Africa"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label>Expiry Date</label><input type="date"></div>
+            <div class="field"><label>Nationality</label><input type="text" placeholder="e.g. South African"></div>
+          </div>
+        </div>
+        <div class="nav-btns">
+          <button class="btn btn-back" onclick="showView('login')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+          <button class="btn btn-next" onclick="goStep(2)">Continue →</button>
+        </div>
+      </div>
+
+      <div id="rpage2" style="display:none">
+        <div class="card">
+          <div class="section-title"><i class="ti ti-map-route" aria-hidden="true" style="font-size:16px"></i> Travel Components</div>
+          <div class="section-sub">Select what you need, then complete the details below.</div>
+          <div class="comp-grid">
+            <div class="comp-card" id="comp-flight" onclick="toggleComp('flight')"><div style="font-size:22px">✈️</div><div class="comp-name">Flights</div><div class="comp-desc">Flights required</div><div class="comp-status" id="cs-flight">Not included</div></div>
+            <div class="comp-card" id="comp-hotel" onclick="toggleComp('hotel')"><div style="font-size:22px">🏨</div><div class="comp-name">Hotel</div><div class="comp-desc">Accommodation required</div><div class="comp-status" id="cs-hotel">Not included</div></div>
+            <div class="comp-card sel" id="comp-transfer" onclick="toggleComp('transfer')"><div style="font-size:22px">🚐</div><div class="comp-name">Transfers</div><div class="comp-desc">Airport transfers required</div><div class="comp-status" id="cs-transfer">✓ Included</div></div>
+          </div>
+          <div class="agency-ban"><i class="ti ti-world" aria-hidden="true" style="font-size:15px;flex-shrink:0"></i><span><strong>Agency Routing:</strong> All requests are sent to <strong>Sundown Travel</strong> and <strong>Hamilton Travel</strong> for competitive quoting.</span></div>
+        </div>
+        <div class="card" id="flight-form" style="display:none">
+          <div class="section-title">✈️ Flight Details</div>
+          <div class="form-row"><div class="field"><label>From</label><input type="text" placeholder="e.g. JNB – O.R. Tambo" id="f-from"></div><div class="field"><label>To</label><input type="text" placeholder="e.g. NBO – Jomo Kenyatta" id="f-to"></div></div>
+          <div class="form-row"><div class="field"><label>Departure Date</label><input type="date" id="f-dep"></div><div class="field"><label>Return Date</label><input type="date" id="f-ret"></div></div>
+        </div>
+        <div class="card" id="hotel-form" style="display:none">
+          <div class="section-title">🏨 Hotel Details</div>
+          <div class="form-row"><div class="field"><label>City / Location</label><input type="text" placeholder="e.g. Cape Town, CBD"></div><div class="field"><label>Hotel Preference</label><input type="text" placeholder="e.g. Radisson Blu or similar"></div></div>
+          <div class="form-row"><div class="field"><label>Check-in</label><input type="date"></div><div class="field"><label>Check-out</label><input type="date"></div></div>
+        </div>
+        <div class="card" id="transfer-form">
+          <div class="section-title">🚐 Transfer Details</div>
+          <div class="form-row"><div class="field"><label>Pickup Location</label><input type="text" placeholder="e.g. JKIA Airport, Terminal 1"></div><div class="field"><label>Drop-off Location</label><input type="text" placeholder="e.g. Radisson Blu, Nairobi"></div></div>
+          <div class="form-row full"><div class="field"><label>Transfer Date</label><input type="date"></div></div>
+        </div>
+        <div class="nav-btns">
+          <button class="btn btn-back" onclick="goStep(1)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+          <button class="btn btn-next" onclick="goStep(3)">Continue →</button>
+        </div>
+      </div>
+
+      <div id="rpage3" style="display:none">
+        <div class="card">
+          <div class="section-title">✈️ Flight Preferences</div>
+          <div class="section-sub">Specify requirements for the flight booking.</div>
+          <div class="form-row">
+            <div class="field"><label>Class of Travel</label><select><option>Economy</option><option>Business</option><option>First</option></select></div>
+            <div class="field"><label>Passengers</label><select><option>1 passenger</option><option>2 passengers</option><option>3 passengers</option><option>4 passengers</option></select></div>
+          </div>
+          <label class="chk-row"><input type="checkbox" style="cursor:pointer"> Direct flights only (where available)</label>
+          <label class="chk-row"><input type="checkbox" style="cursor:pointer"> Flexible dates (±2 days)</label>
+        </div>
+        <div class="nav-btns">
+          <button class="btn btn-back" onclick="goStep(2)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+          <button class="btn btn-next" onclick="goStep(4)">Continue →</button>
+        </div>
+      </div>
+
+      <div id="rpage4" style="display:none">
+        <div class="card">
+          <div class="section-title">Trip Summary</div>
+          <div class="sum-box">
+            <div class="sum-row"><span class="sum-label">Traveller</span><span id="sum-name">—</span></div>
+            <div class="sum-row"><span class="sum-label">Manager</span><span id="sum-mgr">—</span></div>
+            <div class="sum-row"><span class="sum-label">Purpose</span><span id="sum-purpose">—</span></div>
+            <div class="sum-row"><span class="sum-label">Components</span><span id="sum-comps">Transfers</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Risk and Acknowledgements</div>
+          <div class="section-sub">Confirm each item before submitting.</div>
+          <div class="risk-item"><input type="checkbox" id="ack1" style="cursor:pointer;margin-top:2px"><div><div class="risk-label">Travel policy compliance</div><div class="risk-desc">This trip complies with Genesis Analytics travel policy and approved budget limits.</div></div></div>
+          <div class="risk-item"><input type="checkbox" id="ack2" style="cursor:pointer;margin-top:2px"><div><div class="risk-label">Manager approval</div><div class="risk-desc">My line manager is aware of and has approved this travel request.</div></div></div>
+          <div class="risk-item"><input type="checkbox" id="ack3" style="cursor:pointer;margin-top:2px"><div><div class="risk-label">Safeture registration</div><div class="risk-desc">I will register my travel with Safeture for safety tracking before departure.</div></div></div>
+          <div class="risk-item"><input type="checkbox" id="ack4" style="cursor:pointer;margin-top:2px"><div><div class="risk-label">Travel insurance</div><div class="risk-desc">Santam travel insurance will be arranged as part of this booking.</div></div></div>
+        </div>
+        <div class="nav-btns">
+          <button class="btn btn-back" onclick="goStep(3)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+          <button class="btn btn-green" onclick="submitRequest()"><i class="ti ti-send" aria-hidden="true"></i> Submit Request</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="view-confirm">
+      <div class="card" style="text-align:center;padding:48px 24px">
+        <div style="font-size:40px;margin-bottom:14px;color:#16a34a"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+        <div style="font-size:18px;font-weight:500;margin-bottom:8px">Request submitted</div>
+        <div style="color:var(--text-secondary);font-size:13px;margin-bottom:20px">Sent to Sundown Travel and Hamilton Travel for quoting. Your manager will be notified for approval.</div>
+        <div style="background:var(--surface-1);border-radius:var(--radius);padding:10px 18px;display:inline-block;font-size:12px;color:var(--text-secondary)">Reference: <strong style="color:var(--text-primary);font-family:var(--font-mono)" id="ref-num">TRV-2026-0142</strong></div>
+        <div style="margin-top:20px;display:flex;gap:10px;justify-content:center">
+          <button class="btn btn-next" onclick="showView('login')">New Request</button>
+          <button class="btn btn-back" onclick="showView('agent-quote')">Preview: Agent Quote Form</button>
+          <button class="btn btn-back" onclick="showView('mgr-approval')">Preview: Manager Approval</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="view-agent-quote">
+      <div style="margin-bottom:14px"><button class="btn btn-back" onclick="showView('confirm')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button></div>
+      <div class="card">
+        <div class="quote-header">
+          <div class="qh-label">Quote Submission Portal</div>
+          <div class="qh-name">Sundown Travel</div>
+          <div class="qh-sub">Submitting competitive quote for travel request</div>
+        </div>
+        <div class="req-sum">
+          <div class="rs-label">Request Summary — Please verify before submitting</div>
+          <div class="rs-grid">
+            <div class="rs-field"><div class="rf-label">Reference</div><div><span class="ref-badge" id="aq-ref">TRV-2026-0142</span></div></div>
+            <div class="rs-field"><div class="rf-label">Traveller</div><div class="rf-val" id="aq-name">Sarah Johnson</div></div>
+            <div class="rs-field"><div class="rf-label">Route</div><div class="rf-val">Johannesburg (JNB) → Nairobi (NBO)</div></div>
+            <div class="rs-field"><div class="rf-label">Departure</div><div class="rf-val">2026-08-15 → 2026-08-20</div></div>
+            <div class="rs-field"><div class="rf-label">Class / Pax</div><div class="rf-val">Economy · 1 pax</div></div>
+            <div class="rs-field"><div class="rf-label">Components</div><div class="rf-val">✈️ 🏨</div></div>
+          </div>
+        </div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:4px">Your Quote</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px">Complete all fields and submit your competitive quote. You can provide up to 5 options — each will be submitted as a separate entry for the traveller to compare.</div>
+        <div class="field" style="margin-bottom:16px"><label>Your Internal Reference <span class="req">*</span></label><input type="text" placeholder="e.g. SUN-2026-00456"></div>
+        <div id="quote-options">
+          <div class="opt-block" id="opt-1">
+            <div class="opt-label">Option 1</div>
+            <div class="form-row full"><div class="field"><label>Component Quoted <span class="req">*</span></label><select><option>Flights</option><option>Hotel</option><option>Transfers</option><option>Flights + Hotel</option><option>Flights + Hotel + Transfers</option></select></div></div>
+            <div class="form-row full"><div class="field"><label>Quote Description <span class="req">*</span></label><textarea rows="3" placeholder="e.g. Return flights JNB–NBO on Kenya Airways. Dep 20 Nov 12:05, Ret 25 Nov 21:10. Economy. 1×23 kg bag included."></textarea></div></div>
+            <div class="form-row">
+              <div class="field"><label>Quote Price <span class="req">*</span></label><input type="text" placeholder="e.g. 4500"></div>
+              <div class="field"><label>Max Price (if price range)</label><input type="text" placeholder="e.g. 5200"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Currency</label><select><option>ZAR</option><option>USD</option><option>EUR</option><option>GBP</option><option>KES</option></select></div>
+              <div class="field"><label>Quote Valid Until</label><input type="date"></div>
+            </div>
+            <div class="field" style="margin-bottom:10px"><label>Carbon Emissions (kg CO₂e — optional)</label><input type="text" placeholder="e.g. 285"></div>
+            <div class="field" style="margin-bottom:10px"><label>Notes</label><textarea rows="2" placeholder="Any important information about this option not captured in the other fields."></textarea></div>
+            <div class="field"><label>Attach Quote Document (optional — PDF, Word, or Excel)</label>
+              <div class="upload-zone"><i class="ti ti-upload" aria-hidden="true"></i>Drag and drop your quote document here, or<br><button style="background:var(--surface-2);border:0.5px solid var(--border);border-radius:var(--radius);padding:5px 14px;font-size:12px;cursor:pointer;margin-top:6px;font-family:var(--font-sans)">Browse file</button></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="add-opt-btn" onclick="addQuoteOption()"><i class="ti ti-plus" aria-hidden="true"></i> Add Another Option</button>
+          <button class="submit-btn" onclick="submitQuote()"><i class="ti ti-send" aria-hidden="true"></i> Submit Quote →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="view-mgr-approval">
+      <div style="margin-bottom:14px"><button class="btn btn-back" onclick="showView('confirm')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button></div>
+      <div class="card">
+        <div class="mgr-header">
+          <div class="mgr-badge">Manager Approval Required</div>
+          <div class="mgr-title">Travel Request Approval</div>
+          <div><span class="mgr-ref" id="ma-ref">TRV-2026-0142</span></div>
+        </div>
+        <div class="section-title" style="margin-bottom:12px">Request Details</div>
+        <div class="req-det">
+          <div class="rd-field"><div class="rd-label">Traveller</div><div class="rd-val" id="ma-name">Sarah Johnson</div></div>
+          <div class="rd-field"><div class="rd-label">Route</div><div class="rd-val">Johannesburg (JNB) → Nairobi (NBO)</div></div>
+          <div class="rd-field"><div class="rd-label">Departure</div><div class="rd-val">2026-08-15 → 2026-08-20</div></div>
+          <div class="rd-field"><div class="rd-label">Grade</div><div class="rd-val">Senior Consultant / Manager</div></div>
+          <div class="rd-field"><div class="rd-label">Purpose</div><div class="rd-val">Client meeting — Q3 strategy session</div></div>
+          <div class="rd-field"><div class="rd-label">Cost Code</div><div class="rd-val">PROJ-2026-047</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="quotes-header">
+          <div class="quotes-title">Quotes Received</div>
+          <div class="override-note">You may override the traveller's selection below</div>
+        </div>
+        <div class="quotes-sub">The traveller's preferred option is highlighted. Review all options and select a different one if appropriate before approving.</div>
+        <div class="q-card selected" id="qc1">
+          <div class="q-top"><div><div class="q-agency">Sundown Travel</div><div class="q-badges"><span class="badge badge-opt">Option 1</span><span class="badge badge-tc">⭐ Traveller's Choice</span></div></div><div style="text-align:right"><div class="q-price">ZAR 12,500</div><div class="q-sel-check">✓ Selected</div></div></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Ref: SUN-2026-00456</div>
+          <div class="q-desc">Return flights JNB–NBO on Kenya Airways. Dep 15 Aug 10:30, Ret 20 Aug 15:45. Economy class. 1×23 kg checked bag included.</div>
+          <div class="q-note">Includes all airport taxes. Free cancellation 48 h before departure. Price valid until 30 Jul.</div>
+          <div class="q-co2"><i class="ti ti-leaf" aria-hidden="true" style="font-size:12px"></i> 285 kg CO₂e</div>
+        </div>
+        <div class="q-card" id="qc2">
+          <div class="q-top"><div><div class="q-agency">Sundown Travel</div><div class="q-badges"><span class="badge badge-opt">Option 2</span><span class="badge badge-alt">Alternative</span></div></div><div style="text-align:right"><div class="q-price">ZAR 19,800</div><button class="sel-btn" onclick="selectQuote('qc2')">Select this option</button></div></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Ref: SUN-2026-00456</div>
+          <div class="q-desc">Return flights JNB–NBO on Kenya Airways (Economy) + 4 nights Nairobi Serena Hotel on B&B basis. Standard room.</div>
+          <div class="q-note">Hotel includes daily breakfast. Combined package rate — cannot be split. Taxes included.</div>
+          <div class="q-co2"><i class="ti ti-leaf" aria-hidden="true" style="font-size:12px"></i> 285 kg CO₂e</div>
+        </div>
+        <div class="q-card mgr-sel" id="qc3">
+          <div class="q-top"><div><div class="q-agency">Hamilton Travel</div><div class="q-badges"><span class="badge badge-opt">Option 1</span><span class="badge badge-ms">Manager's Selection</span></div></div><div style="text-align:right"><div class="q-price" style="color:#1d4ed8">ZAR 11,200 – 13,400</div><div class="q-sel-check blue">✓ Selected</div></div></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Ref: HAM-2026-00789</div>
+          <div class="q-desc">Return flights JNB–NBO via Addis Ababa on Ethiopian Airlines. Dep 15 Aug 07:15 (arr 14:20), Ret 20 Aug 18:20 (arr 04:10+1). Economy. 1×23 kg bag.</div>
+          <div class="q-note">Price range reflects current seat availability. Longer travel time due to ADD connection. All taxes included.</div>
+          <div class="q-co2"><i class="ti ti-leaf" aria-hidden="true" style="font-size:12px"></i> 340 kg CO₂e</div>
+        </div>
+        <div class="q-card" id="qc4">
+          <div class="q-top"><div><div class="q-agency">Hamilton Travel</div><div class="q-badges"><span class="badge badge-opt">Option 2</span><span class="badge badge-alt">Alternative</span></div></div><div style="text-align:right"><div class="q-price">ZAR 22,100</div><button class="sel-btn" onclick="selectQuote('qc4')">Select this option</button></div></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Ref: HAM-2026-00789</div>
+          <div class="q-desc">Return flights JNB–NBO via ADD on Ethiopian Airlines (Economy) + 4 nights Tribe Hotel Nairobi on B&B basis. Superior room.</div>
+          <div class="q-note">Tribe Hotel is 5 min from client offices — recommended for this trip. B&B included. Combined rate.</div>
+          <div class="q-co2"><i class="ti ti-leaf" aria-hidden="true" style="font-size:12px"></i> 340 kg CO₂e</div>
+        </div>
+        <div class="mgr-actions">
+          <button class="btn btn-green" onclick="alert('Request approved!')"><i class="ti ti-check" aria-hidden="true"></i> Approve Request</button>
+          <button class="btn btn-danger" onclick="alert('Request rejected. Traveller will be notified.')"><i class="ti ti-x" aria-hidden="true"></i> Reject Request</button>
+          <button class="btn btn-back" onclick="alert('Request sent back for revision.')"><i class="ti ti-refresh" aria-hidden="true"></i> Send Back for Revision</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="view-admin">
+      <div class="card">
+        <div class="section-title"><i class="ti ti-settings" aria-hidden="true" style="font-size:16px"></i> Portal Admin Settings</div>
+        <div class="section-sub">Changes are saved locally and apply immediately.</div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:8px"><i class="ti ti-map-pin" aria-hidden="true" style="font-size:14px"></i> Africa Travel Agencies</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">These agencies receive quoting requests for Africa routes.</div>
+        <div style="border:0.5px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:10px">
+          <div style="font-size:10px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Agency 1</div>
+          <div class="form-row"><div class="field"><label>Name</label><input type="text" value="Sundown Travel"></div><div class="field"><label>Email</label><input type="text" placeholder="agency@email.com"></div></div>
+          <div class="field"><label>Description / Spec</label><input type="text" value="Africa Travel — Primary Provider"></div>
+        </div>
+        <div style="border:0.5px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:10px">
+          <div style="font-size:10px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Agency 2</div>
+          <div class="form-row"><div class="field"><label>Name</label><input type="text" value="Hamilton Travel"></div><div class="field"><label>Email</label><input type="text" placeholder="agency@email.com"></div></div>
+          <div class="field"><label>Description / Spec</label><input type="text" value="Africa Travel — Competitive Quotes"></div>
+        </div>
+        <div style="font-size:13px;font-weight:500;margin:16px 0 8px"><i class="ti ti-plane" aria-hidden="true" style="font-size:14px"></i> International Travel Agencies</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">Used for routes originating outside Africa.</div>
+        <button style="border:1px dashed var(--border-strong);background:transparent;border-radius:var(--radius);width:100%;padding:7px;font-size:12px;color:var(--text-secondary);cursor:pointer;margin-bottom:16px;font-family:var(--font-sans)">+ Add Agency</button>
+        <div style="font-size:13px;font-weight:500;margin-bottom:6px"><i class="ti ti-eye" aria-hidden="true" style="font-size:14px"></i> Preview Portal Views</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">Launch the agent quote form or the manager approval page directly from here.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+          <button class="btn btn-back" onclick="showView('agent-quote')" style="font-size:12px">Agent Quote Form</button>
+          <button class="btn btn-back" onclick="showView('mgr-approval')" style="font-size:12px">Manager Approval</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-back" onclick="showView('login')" style="color:var(--text-danger);border-color:var(--border-danger)"><i class="ti ti-power" aria-hidden="true"></i> Logout</button>
+          <button class="btn btn-back" onclick="showView('login')">Close</button>
+          <button class="btn btn-green" style="flex:1"><i class="ti ti-device-floppy" aria-hidden="true"></i> Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let currentStep=1;
+const comps={flight:false,hotel:false,transfer:true};
+let optCount=1;
+
+function showView(v){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  if(v==='request'){currentStep=1;renderStep();}
+}
+
+function startRequest(){
+  const u=document.getElementById('login-username').value.trim();
+  const email=u?(u+'@genesis-analytics.com'):'user@genesis-analytics.com';
+  document.getElementById('f-email').value=email;
+  document.getElementById('disp-email').textContent=email;
+  showView('request');
+}
+
+function startRequestManual(){
+  document.getElementById('f-email').value='';
+  document.getElementById('disp-email').textContent='(not found)';
+  showView('request');
+}
+
+function goStep(n){
+  document.getElementById('rpage'+currentStep).style.display='none';
+  currentStep=n;
+  renderStep();
+}
+
+function renderStep(){
+  for(let i=1;i<=4;i++){
+    const el=document.getElementById('rpage'+i);
+    if(el)el.style.display=(i===currentStep?'block':'none');
+    const sc=document.getElementById('sc'+i);
+    const sn=document.getElementById('sn'+i);
+    sc.className='sc '+(i<currentStep?'done':i===currentStep?'active':'todo');
+    sc.innerHTML=i<currentStep?'<i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>':i;
+    sn.className='sn'+(i===currentStep?' active':'');
+    if(i<4)document.getElementById('sl'+i).className='sl'+(i<currentStep?' done':'');
+  }
+  document.getElementById('step-counter').textContent='Step '+currentStep+' of 4';
+  if(currentStep===4)updateSummary();
+}
+
+function toggleComp(name){
+  comps[name]=!comps[name];
+  document.getElementById('comp-'+name).className='comp-card'+(comps[name]?' sel':'');
+  document.getElementById('cs-'+name).textContent=comps[name]?'✓ Included':'Not included';
+  const fid=name==='transfer'?'transfer-form':name+'-form';
+  const f=document.getElementById(fid);
+  if(f)f.style.display=comps[name]?'block':'none';
+}
+
+function updateSummary(){
+  document.getElementById('sum-name').textContent=document.getElementById('f-name').value||'—';
+  document.getElementById('sum-mgr').textContent=document.getElementById('f-manager').value||'—';
+  document.getElementById('sum-purpose').textContent=document.getElementById('f-purpose').value||'—';
+  const sel=[];
+  if(comps.flight)sel.push('Flights');
+  if(comps.hotel)sel.push('Hotel');
+  if(comps.transfer)sel.push('Transfers');
+  document.getElementById('sum-comps').textContent=sel.length?sel.join(', '):'None selected';
+}
+
+function submitRequest(){
+  const acks=['ack1','ack2','ack3','ack4'];
+  if(!acks.every(id=>document.getElementById(id).checked)){alert('Please acknowledge all items before submitting.');return;}
+
+  const ref='TRV-2026-'+String(Math.floor(Math.random()*9000)+1000);
+  const payload={
+    reference: ref,
+    name: document.getElementById('f-name').value,
+    email: document.getElementById('f-email').value,
+    grade: document.getElementById('f-grade').value,
+    manager: document.getElementById('f-manager').value,
+    managerEmail: document.getElementById('f-mgr-email').value,
+    purpose: document.getElementById('f-purpose').value,
+    costCode: document.getElementById('f-code').value,
+    components: [comps.flight?'Flights':'',comps.hotel?'Hotel':'',comps.transfer?'Transfers':''].filter(Boolean).join(', '),
+    from: document.getElementById('f-from')?document.getElementById('f-from').value:'',
+    to: document.getElementById('f-to')?document.getElementById('f-to').value:'',
+    departure: document.getElementById('f-dep')?document.getElementById('f-dep').value:'',
+    returnDate: document.getElementById('f-ret')?document.getElementById('f-ret').value:'',
+    travelClass: 'Economy',
+    passengers: '1'
+  };
+
+  const SCRIPT_URL='https://script.google.com/a/macros/genesis-analytics.com/s/AKfycbymrgwC78v7wEwOTxeZHtIIUhiNfbHBz-mWBqeUpW8qP_iohjsEf9SmrYuDytVfq_ra/exec';
+
+  fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})
+  .then(()=>{
+    document.getElementById('ref-num').textContent=ref;
+    document.getElementById('aq-ref').textContent=ref;
+    document.getElementById('ma-ref').textContent=ref;
+    const name=payload.name||'Traveller';
+    document.getElementById('aq-name').textContent=name;
+    document.getElementById('ma-name').textContent=name;
+    showView('confirm');
+  })
+  .catch(()=>alert('Submission failed. Please try again.'));
+}
+
+function addQuoteOption(){
+  if(optCount>=5){alert('Maximum 5 options allowed.');return;}
+  optCount++;
+  const d=document.createElement('div');
+  d.className='opt-block';
+  d.innerHTML=`<div class="opt-label">Option ${optCount}</div><div class="form-row full"><div class="field"><label>Component Quoted <span class="req">*</span></label><select><option>Flights</option><option>Hotel</option><option>Transfers</option><option>Flights + Hotel</option><option>Flights + Hotel + Transfers</option></select></div></div><div class="form-row full"><div class="field"><label>Quote Description <span class="req">*</span></label><textarea rows="3" placeholder="Describe this option..."></textarea></div></div><div class="form-row"><div class="field"><label>Quote Price <span class="req">*</span></label><input type="text" placeholder="e.g. 4500"></div><div class="field"><label>Max Price</label><input type="text" placeholder="e.g. 5200"></div></div><div class="form-row"><div class="field"><label>Currency</label><select><option>ZAR</option><option>USD</option><option>EUR</option></select></div><div class="field"><label>Quote Valid Until</label><input type="date"></div></div><div class="field"><label>Notes</label><textarea rows="2" placeholder="Any additional notes..."></textarea></div>`;
+  document.getElementById('quote-options').appendChild(d);
+}
+
+function submitQuote(){alert('Quote submitted to Genesis Analytics.');}
+
+function selectQuote(id){
+  ['qc1','qc2','qc3','qc4'].forEach(q=>{
+    const c=document.getElementById(q);
+    c.className='q-card';
+    const p=c.querySelector('.q-price');
+    if(p){p.style.color='';}
+    const chk=c.querySelector('.q-sel-check');
+    if(chk)chk.remove();
+    const sb=c.querySelector('.sel-btn');
+    if(!sb){
+      const nb=document.createElement('button');
+      nb.className='sel-btn';
+      nb.textContent='Select this option';
+      nb.onclick=()=>selectQuote(q);
+      const topRight=c.querySelector('.q-top>div:last-child');
+      if(topRight)topRight.appendChild(nb);
+    }
+  });
+  const chosen=document.getElementById(id);
+  chosen.className='q-card mgr-sel';
+  const p=chosen.querySelector('.q-price');
+  if(p)p.style.color='#1d4ed8';
+  const topRight=chosen.querySelector('.q-top>div:last-child');
+  const sb=topRight.querySelector('.sel-btn');
+  if(sb)sb.remove();
+  const chk=document.createElement('div');
+  chk.className='q-sel-check blue';
+  chk.textContent='✓ Selected';
+  topRight.appendChild(chk);
+  const badges=chosen.querySelector('.q-badges');
+  const old=badges.querySelector('.badge-ms,.badge-tc');
+  if(!old){const b=document.createElement('span');b.className='badge badge-ms';b.textContent="Manager's Selection";badges.appendChild(b);}
+}
+
+function toggleAdmin(){showView('admin');}
+</script>

@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genesis Corporate Travel Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Genesis Design System ─────────────────────────── */
+:root{
+  --navy:#262626;--navy-mid:#3A3A3A;--navy-soft:#464646;
+  --green:#72A84E;--green-lt:#EEF5E8;--green-dk:#3d6e29;
+  --green-light:#AED68F;
+  --orange:#F2672B;--red:#DC1E35;
+  --bg:#F2F2F2;--card:#FFFFFF;--border:#D8D8D8;
+  --text:#464646;--muted:#9C9B9B;--light:#CBC8C7;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px;}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);padding:0 1.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 4px 20px rgba(38,38,38,.35);}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.logo-g{background:var(--green);color:var(--navy);font-weight:800;font-size:.85rem;padding:3px 8px;border-radius:5px;letter-spacing:-.5px;}
+.logo-name{color:#fff;font-weight:700;font-size:1rem;}
+.logo-sep{color:rgba(255,255,255,.3);margin:0 4px;}
+.logo-sub{color:rgba(255,255,255,.6);font-size:.78rem;font-weight:500;}
+.header-right{display:flex;align-items:center;gap:.5rem;}
+.hbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);border-radius:999px;padding:5px 13px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
+.hbtn:hover{background:rgba(255,255,255,.2);color:#fff;}
+.hbtn.green{background:rgba(114,168,78,.3);border-color:rgba(114,168,78,.5);color:#AED68F;}
+.user-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 12px 4px 5px;cursor:pointer;transition:all .2s;}
+.user-pill:hover{background:rgba(255,255,255,.18);}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0;}
+.user-pill-name{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.9);}
+
+/* ── Layout ── */
+.app{max-width:960px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+.page{display:none;animation:fadeUp .3s ease-out both;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── Cards ── */
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05);padding:1.5rem;margin-bottom:1rem;}
+.card-sm{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:1rem;}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:.6rem 1.4rem;border-radius:9px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.875rem;cursor:pointer;border:none;transition:all .2s;text-decoration:none;}
+.btn-primary{background:var(--green);color:#fff;}
+.btn-primary:hover{background:#5a8a3e;transform:translateY(-1px);box-shadow:0 4px 12px rgba(114,168,78,.35);}
+.btn-primary:disabled{background:var(--light);cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-outline{background:#fff;color:var(--green);border:2px solid var(--green);}
+.btn-outline:hover{background:var(--green-lt);}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);}
+.btn-ghost:hover{background:var(--bg);}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-navy:hover{background:var(--navy-mid);}
+.btn-danger{background:var(--red);color:#fff;}
+.btn-danger:hover{background:#b01828;}
+.btn-amber{background:var(--orange);color:#fff;}
+.btn-lg{padding:.8rem 2rem;font-size:1rem;}
+.btn-full{width:100%;justify-content:center;}
+.btn-sm{padding:.4rem .9rem;font-size:.78rem;}
+
+/* ── Forms ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1.25rem;}
+.fg{margin-bottom:1rem;}
+.fg.full{grid-column:1/-1;}
+.fg label{display:block;font-size:.75rem;font-weight:600;color:var(--text);margin-bottom:5px;letter-spacing:.01em;}
+.req{color:var(--red);}
+.fg input,.fg select,.fg textarea{width:100%;padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Montserrat',sans-serif;font-size:.875rem;color:var(--text);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(114,168,78,.13);}
+.fg textarea{resize:vertical;min-height:80px;}
+.fg input[readonly]{background:var(--bg);cursor:not-allowed;}
+.email-split{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s;}
+.email-split:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(114,168,78,.13);}
+.email-split input{flex:1;border:none;padding:.6rem .85rem;font-family:'Montserrat',sans-serif;font-size:.875rem;color:var(--text);outline:none;background:transparent;}
+.email-split .suffix{background:var(--bg);padding:.6rem .85rem;font-size:.82rem;color:var(--muted);font-weight:600;white-space:nowrap;border-left:1.5px solid var(--border);}
+.chk-row{display:flex;align-items:center;gap:8px;font-size:.875rem;cursor:pointer;margin-bottom:.5rem;}
+.chk-row input{accent-color:var(--navy);cursor:pointer;}
+
+/* ── Section ── */
+.sec-h{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.25rem;}
+.sec-sub{font-size:.8rem;color:var(--muted);margin-bottom:1.25rem;}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem;}
+
+/* ── Info boxes ── */
+.info{padding:.875rem 1rem;border-radius:10px;font-size:.8125rem;border:1.5px solid;margin-bottom:1rem;display:flex;gap:.625rem;align-items:flex-start;}
+.info-green{background:var(--green-lt);border-color:#AED68F;color:#3d6e29;}
+.info-amber{background:#FFF3ED;border-color:#F2A074;color:#B34A1B;}
+.info-red{background:#FEF1F1;border-color:var(--red);color:#991B1B;}
+.info-blue{background:#EFF6FF;border-color:#BFDBFE;color:#1d4ed8;}
+.info-navy{background:rgba(38,38,38,.06);border-color:rgba(38,38,38,.15);color:var(--navy);}
+
+/* ── Tags / Status pills ── */
+.tag{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:.7rem;font-weight:600;}
+.tag-green{background:var(--green-lt);color:var(--green-dk);border:0.5px solid var(--green-light);}
+.tag-amber{background:#FFF3ED;color:#B34A1B;}
+.tag-red{background:#FEE2E2;color:#991B1B;}
+.tag-grey{background:var(--bg);color:var(--muted);}
+.tag-navy{background:rgba(38,38,38,.1);color:var(--navy);}
+.tag-blue{background:#EFF6FF;color:#1d4ed8;}
+
+/* ── Stepper ── */
+.stepper{display:flex;align-items:center;margin-bottom:1.25rem;}
+.st-node{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;}
+.st-circle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;transition:all .3s;position:relative;z-index:1;}
+.st-circle.done{background:var(--green);color:#fff;}
+.st-circle.active{background:var(--navy);color:#fff;box-shadow:0 0 0 4px rgba(38,38,38,.12);}
+.st-circle.todo{background:var(--border);color:var(--light);}
+.st-label{font-size:.67rem;font-weight:600;color:var(--muted);text-align:center;white-space:nowrap;}
+.st-label.active{color:var(--navy);}
+.st-line{flex:1;height:2px;background:var(--border);margin-top:-26px;z-index:0;transition:background .3s;}
+.st-line.done{background:var(--green);}
+
+/* ── Toggle components ── */
+.toggle-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1rem;}
+.toggle-grid.cols3{grid-template-columns:repeat(3,1fr);}
+.tog-btn{padding:1rem;border-radius:12px;border:2px solid var(--border);background:#fff;cursor:pointer;text-align:left;transition:all .2s;}
+.tog-btn.on{border-color:var(--green);background:linear-gradient(135deg,#F4F8EE,var(--green-lt));}
+.tog-icon{font-size:1.5rem;margin-bottom:.5rem;}
+.tog-title{font-weight:700;font-size:.875rem;color:var(--text);}
+.tog-sub{font-size:.72rem;color:var(--muted);margin-top:2px;}
+.tog-status{font-size:.72rem;font-weight:700;margin-top:7px;}
+.tog-btn.on .tog-status{color:var(--green);}
+.tog-btn:not(.on) .tog-status{color:var(--light);}
+
+/* ── Login page ── */
+.login-screen{min-height:100vh;background:linear-gradient(135deg,#262626 0%,#3A3A3A 55%,#72A84E 100%);display:flex;align-items:center;justify-content:center;padding:1.5rem;}
+.login-card{background:#fff;border-radius:20px;padding:2.5rem 2.25rem;width:100%;max-width:440px;box-shadow:0 24px 64px rgba(0,0,0,.3);}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:2rem;}
+.login-g{background:var(--green);color:var(--navy);font-weight:800;font-size:1rem;padding:4px 10px;border-radius:6px;}
+.login-brand{font-weight:700;font-size:1.1rem;color:var(--navy);}
+.login-title{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:.375rem;}
+.login-sub{font-size:.83rem;color:var(--muted);margin-bottom:1.75rem;line-height:1.55;}
+.login-roles{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.role-chip{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:600;background:var(--bg);color:var(--muted);}
+
+/* ── Dashboard ── */
+.dash-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);border-radius:14px;padding:1.5rem;margin-bottom:1rem;color:#fff;}
+.dash-greeting{font-size:1.3rem;font-weight:800;margin-bottom:.25rem;}
+.dash-sub{font-size:.82rem;opacity:.65;}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-bottom:1.25rem;}
+.kpi{background:#fff;border-radius:11px;border:1.5px solid var(--border);padding:.875rem 1rem;text-align:center;cursor:pointer;transition:all .2s;}
+.kpi:hover{border-color:var(--green);box-shadow:0 3px 10px rgba(114,168,78,.15);}
+.kpi.active{border-color:var(--navy);background:var(--green-lt);}
+.kpi-n{font-weight:800;font-size:1.75rem;line-height:1;margin-bottom:.25rem;}
+.kpi-l{font-size:.67rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+
+/* ── Request list ── */
+.req-row{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1rem;border-bottom:1px solid #EBEBEB;cursor:pointer;transition:background .15s;}
+.req-row:last-child{border-bottom:none;}
+.req-row:hover{background:#F8FBF5;}
+.req-ref{font-weight:700;font-size:.875rem;color:var(--navy);}
+.req-meta{font-size:.75rem;color:var(--muted);margin-top:2px;}
+
+/* ── Status pills ── */
+.sp{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:700;}
+.sp-draft{background:#F2F2F2;color:#9C9B9B;}
+.sp-submitted{background:#EFF6FF;color:#1d4ed8;}
+.sp-quoting{background:#FFF3ED;color:#B34A1B;}
+.sp-ready{background:#FEF9C3;color:#78350f;}
+.sp-selecting{background:#FDE68A;color:#78350f;}
+.sp-approval{background:#DBEAFE;color:#1e40af;}
+.sp-approved{background:var(--green-lt);color:var(--green-dk);}
+.sp-booking{background:#D1FAE5;color:#065f46;}
+.sp-done{background:#A7F3D0;color:#065f46;}
+.sp-cancelled{background:#FEE2E2;color:#991B1B;}
+
+/* ── Reference badge ── */
+.ref-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(114,168,78,.12);border:1.5px solid rgba(114,168,78,.4);border-radius:9px;padding:6px 14px;font-family:'Courier New',monospace;font-size:.9rem;font-weight:700;color:var(--green-dk);letter-spacing:.03em;}
+
+/* ── Leg card ── */
+.leg-card{border:1.5px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:.75rem;background:#FAFAFA;}
+.leg-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.875rem;}
+.leg-title{font-weight:700;font-size:.875rem;color:var(--navy);}
+
+/* ── Airport autocomplete ── */
+.ac-wrap{position:relative;}
+.ac-dd{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);overflow:hidden;overflow-y:auto;max-height:240px;z-index:200;}
+.ac-item{display:flex;align-items:center;gap:9px;padding:9px 13px;cursor:pointer;border-bottom:1px solid #f0f0f0;font-size:.82rem;}
+.ac-item:last-child{border-bottom:none;}
+.ac-item:hover{background:#F5F9F2;}
+.ac-code{font-weight:700;color:var(--navy);font-size:.78rem;min-width:34px;}
+.ac-city{color:var(--text);}
+.ac-cty{color:var(--muted);font-size:.74rem;margin-left:auto;}
+
+/* ── Quote comparison table ── */
+.quote-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.quote-table th{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:.625rem .875rem;border-bottom:2px solid var(--border);text-align:left;background:var(--bg);position:sticky;top:0;}
+.quote-table td{padding:.75rem .875rem;border-bottom:1px solid #EBEBEB;vertical-align:middle;}
+.quote-table tr:last-child td{border-bottom:none;}
+.quote-table tr:hover td{background:#F8FBF5;}
+.quote-table tr.selected td{background:var(--green-lt);}
+.price-big{font-weight:800;font-size:1.1rem;color:var(--navy);}
+.co2-badge{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--green-dk);background:var(--green-lt);padding:2px 7px;border-radius:999px;}
+
+/* ── Agent quote form ── */
+.opt-block{border:1.5px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:.875rem;background:#FAFAFA;}
+.opt-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.opt-num{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.upload-zone{border:1.5px dashed var(--border);border-radius:8px;padding:1.25rem;text-align:center;cursor:pointer;background:#fff;transition:border-color .2s;}
+.upload-zone:hover{border-color:var(--green);}
+
+/* ── Approval page ── */
+.view-hero{background:linear-gradient(135deg,var(--navy),var(--navy-soft));border-radius:14px;padding:1.5rem;margin-bottom:1rem;color:#fff;}
+.vhero-label{font-size:.7rem;font-weight:700;opacity:.5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:.625rem .875rem;margin-top:.75rem;}
+.dc-label{font-size:.7rem;color:rgba(255,255,255,.55);font-weight:600;margin-bottom:2px;}
+.dc-val{font-weight:700;font-size:.875rem;}
+
+/* ── History table ── */
+.hist-table{width:100%;border-collapse:collapse;font-size:.8125rem;}
+.hist-table th{font-weight:700;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--border);padding:.5rem .75rem;text-align:left;background:var(--bg);}
+.hist-table td{padding:.625rem .75rem;border-bottom:1px solid #EBEBEB;vertical-align:middle;}
+.hist-row{cursor:pointer;transition:background .15s;}
+.hist-row:hover{background:var(--green-lt);}
+
+/* ── Tabs ── */
+.tab-bar{display:flex;gap:4px;background:#EBEBEB;padding:4px;border-radius:10px;margin-bottom:1.25rem;}
+.tab{padding:7px 18px;border-radius:7px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600;font-size:.8rem;background:transparent;color:var(--muted);transition:all .2s;}
+.tab.active{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+
+/* ── Spinner ── */
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{animation:spin .8s linear infinite;display:inline-block;width:16px;height:16px;border:2px solid #E2E8F0;border-top-color:var(--green);border-radius:50%;}
+
+/* ── Passport warning ── */
+.passport-warn{background:#FFF3ED;border:1.5px solid #F2A074;border-radius:7px;padding:.5rem .875rem;font-size:.76rem;color:#B34A1B;font-weight:600;margin-top:.375rem;}
+
+/* ── Empty state ── */
+.empty{text-align:center;padding:3rem 1rem;}
+.empty-icon{font-size:2.5rem;opacity:.3;margin-bottom:.75rem;}
+.empty-title{font-weight:700;color:var(--navy);margin-bottom:.375rem;}
+.empty-sub{font-size:.82rem;color:var(--muted);}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .form-grid,.toggle-grid,.toggle-grid.cols3,.kpi-grid{grid-template-columns:1fr 1fr;}
+  .kpi-grid{grid-template-columns:repeat(3,1fr);}
+  .detail-grid{grid-template-columns:1fr;}
+}
+
+/* ── Sidebar layout ── */
+.app-shell{display:flex;min-height:100vh;}
+.sidebar{width:220px;background:#1B4332;flex-shrink:0;display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
+.sidebar-logo{padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-logo-row{display:flex;align-items:center;gap:8px;}
+.sidebar-logo-g{background:#72A84E;color:#1B4332;font-weight:800;font-size:13px;padding:3px 8px;border-radius:5px;}
+.sidebar-logo-name{color:#fff;font-weight:700;font-size:1rem;}
+.sidebar-logo-sub{color:rgba(255,255,255,.45);font-size:.72rem;font-weight:500;margin-top:3px;}
+.sidebar-nav{padding:.75rem 0;flex:1;}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.7rem 1.25rem;cursor:pointer;transition:background .15s;color:rgba(255,255,255,.75);font-size:.875rem;font-weight:500;border-left:3px solid transparent;margin:1px 0;}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.nav-item.active{background:rgba(114,168,78,.2);color:#AED68F;border-left-color:#72A84E;}
+.nav-item .nav-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0;}
+.nav-item .nav-label{font-weight:600;}
+.sidebar-footer{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.08);}
+.user-block{display:flex;align-items:center;gap:.625rem;cursor:pointer;padding:.5rem;border-radius:8px;transition:background .15s;}
+.user-block:hover{background:rgba(255,255,255,.07);}
+.user-av{width:30px;height:30px;border-radius:50%;background:#72A84E;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-name-sb{font-size:.8rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.user-role-sb{font-size:.68rem;color:rgba(255,255,255,.45);}
+.signout-btn{background:transparent;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:.875rem;padding:.25rem;border-radius:4px;transition:color .15s;font-family:var(--font-sans);}
+.signout-btn:hover{color:rgba(255,255,255,.7);}
+.main-content{margin-left:220px;flex:1;min-height:100vh;background:var(--bg);}
+.content-inner{max-width:900px;margin:0 auto;padding:1.75rem 1.5rem 4rem;}
+@media(max-width:640px){
+  .sidebar{display:none;}
+  .main-content{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ LOGIN ══════════════════ -->
+<div id="loginScreen">
+<div class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="login-g">G:</span>
+      <span class="login-brand">GENESIS</span>
+      <span style="margin-left:auto;font-size:.7rem;color:var(--muted);font-weight:600;">Travel Portal</span>
+    </div>
+    <div class="login-title">Welcome back</div>
+    <div class="login-sub">Enter your Genesis email to continue. Your role and profile will be loaded automatically from the system.</div>
+    <div class="fg">
+      <label>Genesis Email Address <span class="req">*</span></label>
+      <div class="email-split">
+        <input type="text" id="loginUser" placeholder="firstname.lastname" onkeydown="if(event.key==='Enter')doLogin()">
+        <div class="suffix">@genesis-analytics.com</div>
+      </div>
+    </div>
+    <div id="loginErr" style="display:none" class="info info-red"></div>
+    <button class="btn btn-primary btn-full btn-lg" onclick="doLogin()" id="loginBtn">Continue →</button>
+    <p style="text-align:center;margin-top:.875rem;font-size:.75rem;color:var(--muted);">Not in the system? <a onclick="loginManual()" style="color:var(--green);cursor:pointer;font-weight:600;">Fill in manually</a></p>
+    <div class="login-roles">
+      <span class="role-chip">✈️ Traveller</span>
+      <span class="role-chip">💼 Travel Agent</span>
+      <span class="role-chip">✅ Approver</span>
+      <span class="role-chip">⚙️ Admin</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ MAIN APP ══════════════════ -->
+<div id="mainApp" style="display:none">
+
+<div class="app-shell">
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-row">
+      <span class="sidebar-logo-g">G:</span>
+      <span class="sidebar-logo-name">GENESIS</span>
+    </div>
+    <div class="sidebar-logo-sub">Corporate Travel Portal</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')">
+      <span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span>
+    </div>
+    <div class="nav-item" id="nav-form" onclick="startNewRequest()">
+      <span class="nav-icon">✈️</span><span class="nav-label">New Travel Request</span>
+    </div>
+    <div class="nav-item" id="nav-history" onclick="showPage('history')">
+      <span class="nav-icon">📋</span><span class="nav-label">My Requests</span>
+    </div>
+    <div class="nav-item" id="nav-quotes" onclick="showPage('quotes')">
+      <span class="nav-icon">💼</span><span class="nav-label">Travel Options</span>
+    </div>
+    <div class="nav-item" id="nav-approval" onclick="showPage('approval')">
+      <span class="nav-icon">✅</span><span class="nav-label">Approvals</span>
+    </div>
+    <div class="nav-item" id="nav-documents" onclick="showPage('documents')">
+      <span class="nav-icon">📁</span><span class="nav-label">Documents</span>
+    </div>
+    <div class="nav-item" id="nav-search" onclick="showSearch()">
+      <span class="nav-icon">🔍</span><span class="nav-label">Search</span>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="user-block">
+      <div class="user-av" id="userAvatar">T</div>
+      <div class="user-info">
+        <div class="user-name" id="userPillName">Tladi</div>
+        <div class="user-role" id="userRoleSide">Traveller</div>
+      </div>
+      <button class="signout-btn" onclick="doLogout()" title="Sign out">✕</button>
+    </div>
+  </div>
+</div>
+
+<div class="main-content">
+<div class="content-inner">
+
+<!-- ══ DASHBOARD ══ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-hero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div class="dash-greeting" id="dashGreet">Good morning 👋</div>
+        <div class="dash-sub" id="dashRole">Traveller · Genesis Analytics</div>
+      </div>
+      <button class="btn btn-primary" onclick="startNewRequest()">+ New Request</button>
+    </div>
+  </div>
+  <div class="kpi-grid" id="kpiGrid">
+    <div class="kpi" onclick="filterTrips('all')"><div class="kpi-n" style="color:var(--navy)" id="kAll">0</div><div class="kpi-l">All Trips</div></div>
+    <div class="kpi" onclick="filterTrips('active')"><div class="kpi-n" style="color:var(--green)" id="kActive">0</div><div class="kpi-l">Active</div></div>
+    <div class="kpi" onclick="filterTrips('pending')"><div class="kpi-n" style="color:#1e40af" id="kPending">0</div><div class="kpi-l">Awaiting Action</div></div>
+    <div class="kpi" onclick="filterTrips('done')"><div class="kpi-n" style="color:#065f46" id="kDone">0</div><div class="kpi-l">Completed</div></div>
+    <div class="kpi" onclick="filterTrips('cancelled')"><div class="kpi-n" style="color:var(--red)" id="kCancelled">0</div><div class="kpi-l">Cancelled</div></div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <div><div class="sec-h">My Trips</div><div class="sec-sub" style="margin:0">Your travel requests and current status</div></div>
+      <input type="text" placeholder="Search trips…" id="tripSearch" oninput="searchTrips()" style="width:180px;padding:.45rem .8rem;font-size:.8rem;border:1.5px solid var(--border);border-radius:8px;outline:none;font-family:'Montserrat',sans-serif;">
+    </div>
+    <div id="tripList"></div>
+  </div>
+</div>
+
+<!-- ══ NEW REQUEST FORM ══ -->
+<div class="page" id="page-form">
+  <!-- Stepper -->
+  <div class="card" style="padding:1.25rem 1.5rem;margin-bottom:1rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.875rem;">
+      <div style="font-weight:700;font-size:1rem;color:var(--navy);">New Travel Request</div>
+      <div style="font-size:.78rem;color:var(--muted);" id="stepMeta">Step 1 of 5</div>
+    </div>
+    <div class="stepper" id="stepper"></div>
+  </div>
+
+  <!-- Step 1: Traveller Details -->
+  <div id="s1">
+    <div class="card">
+      <div class="sec-h">Traveller Details</div>
+      <div class="sec-sub">Who is travelling and what is the purpose of this trip?</div>
+      <div id="prefillBanner" style="display:none" class="info info-green">✅ Profile loaded from your previous bookings. Please verify all details.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Full Name (as per passport) <span class="req">*</span></label><input type="text" id="f_name" placeholder="e.g. Tladi Thobejane"></div>
+        <div class="fg"><label>Work Email</label><input type="text" id="f_email" readonly></div>
+        <div class="fg"><label>Practice / Department</label><input type="text" id="f_practice" placeholder="e.g. CFSS / BDU / HP"></div>
+        <div class="fg"><label>Booking On Behalf Of <span class="req">*</span></label>
+          <select id="f_behalf"><option value="">Select…</option><option>Genesis Staff Member</option><option>External Consultant</option></select></div>
+        <div class="fg"><label>Project / Practice Code <span class="req">*</span></label><input type="text" id="f_code" placeholder="e.g. PRJ-2026-042"></div>
+        <div class="fg"><label>To Be Paid By <span class="req">*</span></label>
+          <select id="f_paidby"><option value="">Select…</option><option>Genesis Analytics</option><option>Client</option><option>Personal</option></select></div>
+        <div class="fg"><label>Billing Classification <span class="req">*</span></label>
+          <select id="f_billing"><option value="">Select…</option><option>Firm Billing</option><option>Project Billing</option></select></div>
+        <div class="fg"><label>Trip Purpose</label><input type="text" id="f_purpose" placeholder="e.g. Client meeting — Q3 strategy"></div>
+        <div class="fg"><label>Line / Project Manager <span class="req">*</span></label><input type="text" id="f_mgr" placeholder="Approving manager name" list="mgrList"><datalist id="mgrList"></datalist></div>
+        <div class="fg"><label>Manager Email <span class="req">*</span></label><input type="email" id="f_mgremail" placeholder="manager@genesis-analytics.com"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-h">Passport Details</div>
+      <div class="sec-sub">Required for all international travel bookings.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Full Name on Passport <span class="req">*</span></label><input type="text" id="f_ppname" placeholder="Exactly as on passport"></div>
+        <div class="fg"><label>Passport Number</label><input type="text" id="f_ppnum" placeholder="e.g. A12345678"></div>
+        <div class="fg"><label>Expiry Date</label><input type="date" id="f_ppexp" onchange="checkPP()"><div id="ppWarn" class="passport-warn" style="display:none;">⚠️ Passport expires within 6 months. Some countries may deny entry.</div></div>
+        <div class="fg"><label>Issuing Country</label><input type="text" id="f_ppcountry" placeholder="e.g. South Africa"></div>
+        <div class="fg"><label>Nationality</label><input type="text" id="f_nationality" placeholder="e.g. South African"></div>
+        <div class="fg"><label>Date of Birth</label><input type="date" id="f_dob"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-h">Emergency Contact</div>
+      <div class="sec-sub">Required for all travel requests.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Contact Name <span class="req">*</span></label><input type="text" id="f_emname" placeholder="Full name"></div>
+        <div class="fg"><label>Contact Phone <span class="req">*</span></label><input type="tel" id="f_emphone" placeholder="+27 82 123 4567"></div>
+      </div>
+    </div>
+    <div class="nav-bar"><button class="btn btn-ghost" onclick="showPage('dashboard')">← Dashboard</button><button class="btn btn-primary" onclick="goStep(2)">Continue →</button></div>
+  </div>
+
+  <!-- Step 2: Trip Details -->
+  <div id="s2" style="display:none">
+    <div class="card">
+      <div class="sec-h">Trip Details</div>
+      <div class="sec-sub">Tell us where you're going and when.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Trip Type <span class="req">*</span></label>
+          <select id="f_triptype" onchange="updateLegs()"><option value="">Select…</option><option>Single Stop</option><option>Multi Stop</option></select></div>
+        <div class="fg"><label>Destination Countries <span class="req">*</span></label><input type="text" id="f_dest" placeholder="e.g. South Africa, Kenya" oninput="checkRisk()"></div>
+      </div>
+      <div id="riskBanner" style="display:none" class="info info-red">⚠️ <strong>High Risk Destination detected.</strong> This trip will require additional approval and a Travel Risk Assessment before submission.</div>
+      <!-- Flight 1 -->
+      <div class="leg-card">
+        <div class="leg-head"><div class="leg-title">✈️ Flight 1</div>
+          <select id="f1_type" style="width:auto;padding:.35rem .75rem;font-size:.8rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Montserrat',sans-serif;outline:none;">
+            <option>Round-Trip</option><option>One-Way</option></select></div>
+        <div class="form-grid">
+          <div class="fg ac-wrap"><label>From <span class="req">*</span></label><input type="text" id="f1_from" placeholder="e.g. JNB — O.R. Tambo" autocomplete="off" oninput="ac('f1_from')"><div class="ac-dd" id="ac_f1_from" style="display:none;"></div></div>
+          <div class="fg ac-wrap"><label>To <span class="req">*</span></label><input type="text" id="f1_to" placeholder="e.g. NBO — Jomo Kenyatta" autocomplete="off" oninput="ac('f1_to')"><div class="ac-dd" id="ac_f1_to" style="display:none;"></div></div>
+          <div class="fg"><label>Departure Date <span class="req">*</span></label><input type="date" id="f1_dep" onchange="autoDates()"></div>
+          <div class="fg"><label>Time Preference</label><select id="f1_deptime"><option>No preference</option><option>Morning (06:00–12:00)</option><option>Afternoon (12:00–18:00)</option><option>Evening (18:00–22:00)</option><option>Night (22:00–06:00)</option></select></div>
+          <div class="fg"><label>Return Date</label><input type="date" id="f1_ret" onchange="autoDates()"></div>
+          <div class="fg"><label>Return Time Preference</label><select id="f1_rettime"><option>No preference</option><option>Morning</option><option>Afternoon</option><option>Evening</option><option>Night</option></select></div>
+        </div>
+      </div>
+      <!-- Extra legs -->
+      <div id="extraLegs" style="display:none;">
+        <div class="leg-card">
+          <div class="leg-head"><div class="leg-title">✈️ Flight 2</div><select id="f2_type" style="width:auto;padding:.35rem .75rem;font-size:.8rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Montserrat',sans-serif;outline:none;"><option>One-Way</option><option>Round-Trip</option></select></div>
+          <div class="form-grid">
+            <div class="fg ac-wrap"><label>From</label><input type="text" id="f2_from" placeholder="Airport" autocomplete="off" oninput="ac('f2_from')"><div class="ac-dd" id="ac_f2_from" style="display:none;"></div></div>
+            <div class="fg ac-wrap"><label>To</label><input type="text" id="f2_to" placeholder="Airport" autocomplete="off" oninput="ac('f2_to')"><div class="ac-dd" id="ac_f2_to" style="display:none;"></div></div>
+            <div class="fg"><label>Departure Date</label><input type="date" id="f2_dep"></div>
+            <div class="fg"><label>Time Preference</label><select id="f2_deptime"><option>No preference</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
+          </div>
+        </div>
+        <div class="leg-card" id="leg3" style="display:none;">
+          <div class="leg-head"><div class="leg-title">✈️ Flight 3</div><button class="btn btn-ghost btn-sm" onclick="removeLeg3()">Remove</button></div>
+          <div class="form-grid">
+            <div class="fg ac-wrap"><label>From</label><input type="text" id="f3_from" placeholder="Airport" autocomplete="off" oninput="ac('f3_from')"><div class="ac-dd" id="ac_f3_from" style="display:none;"></div></div>
+            <div class="fg ac-wrap"><label>To</label><input type="text" id="f3_to" placeholder="Airport" autocomplete="off" oninput="ac('f3_to')"><div class="ac-dd" id="ac_f3_to" style="display:none;"></div></div>
+            <div class="fg"><label>Departure Date</label><input type="date" id="f3_dep"></div>
+            <div class="fg"><label>Time Preference</label><select id="f3_deptime"><option>No preference</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" id="addLeg3Btn" onclick="addLeg3()" style="margin-bottom:.75rem;">+ Add Flight 3</button>
+      </div>
+    </div>
+    <div class="nav-bar"><button class="btn btn-ghost" onclick="goStep(1)">← Back</button><button class="btn btn-primary" onclick="goStep(3)">Continue →</button></div>
+  </div>
+
+  <!-- Step 3: Components -->
+  <div id="s3" style="display:none">
+    <div class="card">
+      <div class="sec-h">Travel Components</div>
+      <div class="sec-sub">Select everything you need for this trip.</div>
+      <div class="toggle-grid cols3">
+        <button class="tog-btn" id="tog_hotel" onclick="togComp('hotel')"><div class="tog-icon">🏨</div><div class="tog-title">Hotel</div><div class="tog-sub">Accommodation</div><div class="tog-status">Not included</div></button>
+        <button class="tog-btn" id="tog_transfer" onclick="togComp('transfer')"><div class="tog-icon">🚐</div><div class="tog-title">Transfers</div><div class="tog-sub">Airport pickup / drop-off</div><div class="tog-status">Not included</div></button>
+        <button class="tog-btn" id="tog_car" onclick="togComp('car')"><div class="tog-icon">🚗</div><div class="tog-title">Car Hire</div><div class="tog-sub">Vehicle rental</div><div class="tog-status">Not included</div></button>
+        <button class="tog-btn" id="tog_visa" onclick="togComp('visa')"><div class="tog-icon">📋</div><div class="tog-title">Visa Assistance</div><div class="tog-sub">Application support</div><div class="tog-status">Not included</div></button>
+      </div>
+      <div class="info info-blue">🌍 <strong>Agency Routing:</strong> All requests are sent to <strong>Hamilton Travel</strong> and <strong>Sundown Travel</strong> for competitive quoting. You'll compare options before selecting.</div>
+    </div>
+    <!-- Hotel -->
+    <div class="card" id="hotelForm" style="display:none;">
+      <div class="sec-h">🏨 Hotel Details</div><div class="sec-sub">Accommodation preferences.</div>
+      <div class="form-grid">
+        <div class="fg"><label>City / Location <span class="req">*</span></label><input type="text" id="f_hotelcity" placeholder="e.g. Nairobi CBD"></div>
+        <div class="fg"><label>Hotel Preference</label><input type="text" id="f_hotelpref" placeholder="e.g. Radisson Blu or similar"></div>
+        <div class="fg"><label>Check-in Date</label><input type="date" id="f_hotelin"></div>
+        <div class="fg"><label>Check-out Date</label><input type="date" id="f_hotelout"></div>
+        <div class="fg"><label>Star Rating</label><select id="f_hotelstars"><option value="">No preference</option><option>3 Stars</option><option>4 Stars</option><option>5 Stars</option></select></div>
+        <div class="fg"><label>Room Type</label><select id="f_roomtype"><option value="">No preference</option><option>Single</option><option>Double</option><option>Twin</option></select></div>
+        <div class="fg full"><label class="chk-row"><input type="checkbox" id="f_breakfast"> Breakfast included preferred</label></div>
+      </div>
+    </div>
+    <!-- Transfer -->
+    <div class="card" id="transferForm" style="display:none;">
+      <div class="sec-h">🚐 Transfer Details</div><div class="sec-sub">Pickup and drop-off information.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Pickup Location <span class="req">*</span></label><input type="text" id="f_pickup" placeholder="e.g. OR Tambo, Terminal A"></div>
+        <div class="fg"><label>Drop-off Location <span class="req">*</span></label><input type="text" id="f_dropoff" placeholder="e.g. Radisson Blu Sandton"></div>
+        <div class="fg"><label>Transfer Date</label><input type="date" id="f_transferdate"></div>
+      </div>
+    </div>
+    <!-- Car -->
+    <div class="card" id="carForm" style="display:none;">
+      <div class="sec-h">🚗 Car Hire Details</div><div class="sec-sub">Vehicle rental requirements.</div>
+      <div class="form-grid">
+        <div class="fg"><label>City <span class="req">*</span></label><input type="text" id="f_carcity" placeholder="e.g. Nairobi"></div>
+        <div class="fg"><label>Vehicle Type</label><select id="f_cartype"><option value="">No preference</option><option>Economy</option><option>Compact</option><option>SUV</option><option>Van</option></select></div>
+        <div class="fg"><label>Pickup Date</label><input type="date" id="f_carpickup"></div>
+        <div class="fg"><label>Return Date</label><input type="date" id="f_carreturn"></div>
+      </div>
+    </div>
+    <!-- Visa -->
+    <div class="card" id="visaForm" style="display:none;">
+      <div class="sec-h">📋 Visa Requirements</div><div class="sec-sub">Details for visa assistance.</div>
+      <div class="fg full"><label>Notes</label><textarea id="f_visanotes" placeholder="Countries requiring a visa and any known requirements…"></textarea></div>
+    </div>
+    <div class="nav-bar"><button class="btn btn-ghost" onclick="goStep(2)">← Back</button><button class="btn btn-primary" onclick="goStep(4)">Continue →</button></div>
+  </div>
+
+  <!-- Step 4: Preferences -->
+  <div id="s4" style="display:none">
+    <div class="card">
+      <div class="sec-h">Travel Preferences</div><div class="sec-sub">Help the agencies find the best options for you.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Seat Preference</label><select id="f_seat"><option>No preference</option><option>Window (preferred)</option><option>Aisle (preferred)</option><option>Window (even if extra charge)</option><option>Emergency exit row</option></select></div>
+        <div class="fg"><label>Class of Travel</label><select id="f_class"><option>Economy</option><option>Premium Economy</option><option>Business</option><option>First</option></select></div>
+        <div class="fg"><label>Number of Passengers</label><select id="f_pax"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+        <div class="fg"><label>Dietary Requirements</label><input type="text" id="f_diet" placeholder="e.g. Halal / Vegetarian / None"></div>
+        <div class="fg"><label>Frequent Flyer Numbers</label><input type="text" id="f_ffn" placeholder="e.g. BA123456, SA789012"></div>
+        <div class="fg"><label>Medical Needs</label><input type="text" id="f_medical" placeholder="e.g. Aisle seat for medical reasons"></div>
+        <div class="fg full">
+          <label class="chk-row" style="margin-bottom:.5rem;"><input type="checkbox" id="f_direct"> Direct flights only (where available)</label>
+          <label class="chk-row"><input type="checkbox" id="f_flex"> Flexible dates (±2 days)</label>
+        </div>
+        <div class="fg full"><label>Additional Comments</label><textarea id="f_comments" placeholder="Anything else the travel agents should know…"></textarea></div>
+      </div>
+    </div>
+    <div class="nav-bar"><button class="btn btn-ghost" onclick="goStep(3)">← Back</button><button class="btn btn-primary" onclick="goStep(5)">Continue →</button></div>
+  </div>
+
+  <!-- Step 5: Review & Submit -->
+  <div id="s5" style="display:none">
+    <div class="card"><div class="sec-h">Review Your Request</div><div class="sec-sub">Verify all details before submitting.</div><div id="reviewBody"></div></div>
+    <div class="card">
+      <div class="sec-h">Acknowledgements</div><div class="sec-sub">Confirm each item before submitting.</div>
+      <label class="chk-row" style="padding:.75rem;border:1.5px solid var(--border);border-radius:8px;margin-bottom:.5rem;"><input type="checkbox" id="ack1"> Travel policy compliance — This trip complies with Genesis Analytics travel policy and approved budget limits.</label>
+      <label class="chk-row" style="padding:.75rem;border:1.5px solid var(--border);border-radius:8px;margin-bottom:.5rem;"><input type="checkbox" id="ack2"> Manager approval — My line manager is aware of and has pre-approved this trip.</label>
+      <label class="chk-row" style="padding:.75rem;border:1.5px solid var(--border);border-radius:8px;margin-bottom:.5rem;"><input type="checkbox" id="ack3"> Safeture — I will register my travel with Safeture before departure.</label>
+      <label class="chk-row" style="padding:.75rem;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" id="ack4"> Insurance — Santam travel insurance will be arranged as part of this booking.</label>
+    </div>
+    <div id="submitErr" style="display:none" class="info info-red"></div>
+    <div class="nav-bar"><button class="btn btn-ghost" onclick="goStep(4)">← Back</button><button class="btn btn-primary btn-lg" onclick="submitRequest()" id="submitBtn">Submit Request ✈️</button></div>
+  </div>
+</div>
+
+<!-- ══ CONFIRMATION ══ -->
+<div class="page" id="page-confirm">
+  <div class="card" style="text-align:center;padding:3rem 2rem;">
+    <div style="font-size:3.5rem;margin-bottom:1rem;">✅</div>
+    <div style="font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:.5rem;">Request Submitted!</div>
+    <div style="font-size:.875rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;">Sent to <strong>Hamilton Travel</strong> and <strong>Sundown Travel</strong> for competitive quoting. You'll receive an email when quotes are ready to review.</div>
+    <div class="ref-badge" id="confirmRef" style="display:inline-flex;margin-bottom:1.5rem;"></div>
+    <div style="font-size:.8rem;color:var(--muted);margin-bottom:2rem;">Average agency response time: 2–4 hours.</div>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="showPage('dashboard')">Back to Dashboard</button>
+      <button class="btn btn-outline" onclick="startNewRequest()">+ New Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ QUOTE COMPARISON ══ -->
+<div class="page" id="page-quotes">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+    <div><div style="font-weight:800;font-size:1.1rem;color:var(--navy);" id="quotesTitle">Compare Quotes</div><div style="font-size:.8rem;color:var(--muted);" id="quotesSub"></div></div>
+    <button class="btn btn-ghost btn-sm" onclick="showPage('dashboard')">← Back</button>
+  </div>
+  <div class="card" id="quotesCard">
+    <div class="empty"><div class="empty-icon">📋</div><div class="empty-title">No quotes yet</div><div class="empty-sub">Quotes from Hamilton Travel and Sundown Travel will appear here once submitted.</div></div>
+  </div>
+</div>
+
+<!-- ══ HISTORY ══ -->
+<div class="page" id="page-history">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+    <div><div style="font-weight:800;font-size:1.1rem;color:var(--navy);">Booking History</div><div style="font-size:.8rem;color:var(--muted);">All your travel requests</div></div>
+    <button class="btn btn-ghost btn-sm" onclick="showPage('dashboard')">← Back</button>
+  </div>
+  <div class="card">
+    <div style="display:flex;gap:.625rem;margin-bottom:1rem;flex-wrap:wrap;">
+      <input type="text" id="histSearch" placeholder="Search reference, destination…" oninput="renderHistory()" style="flex:1;min-width:160px;padding:.55rem .875rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Montserrat',sans-serif;font-size:.85rem;outline:none;">
+      <select id="histStatus" onchange="renderHistory()" style="padding:.55rem .875rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Montserrat',sans-serif;font-size:.85rem;outline:none;background:#fff;">
+        <option value="">All Statuses</option>
+        <option>Submitted</option><option>Quoting</option><option>Quotes Ready</option>
+        <option>Awaiting Selection</option><option>Pending Approval</option>
+        <option>Approved</option><option>Booking in Progress</option>
+        <option>Completed</option><option>Cancelled</option>
+      </select>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="hist-table">
+        <thead><tr><th>Reference</th><th>Destination</th><th>Departure</th><th>Traveller</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="histBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AGENT QUOTE SUBMISSION ══ -->
+<div class="page" id="page-agent">
+  <div id="agentContent"></div>
+</div>
+
+<!-- ══ MANAGER APPROVAL ══ -->
+<div class="page" id="page-approval">
+  <div id="approvalContent"></div>
+</div>
+
+<!-- ══ DOCUMENTS ══ -->
+<div class="page" id="page-documents">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+    <div><div style="font-weight:800;font-size:1.1rem;color:var(--navy);">Documents</div><div style="font-size:.8rem;color:var(--muted);">Tickets, invoices, and booking documents</div></div>
+  </div>
+  <div class="card">
+    <div class="empty"><div class="empty-icon">📁</div><div class="empty-title">No documents yet</div><div class="empty-sub">Tickets, hotel vouchers, and invoices will appear here once your booking is confirmed.</div></div>
+  </div>
+</div>
+
+<!-- ══ SEARCH OVERLAY ══ -->
+<div id="searchOverlay" style="display:none;position:fixed;inset:0;background:rgba(38,38,38,.7);z-index:800;align-items:flex-start;justify-content:center;padding-top:72px;">
+  <div style="background:#fff;border-radius:16px;width:660px;max-width:calc(100vw - 2rem);box-shadow:0 24px 64px rgba(38,38,38,.3);overflow:hidden;">
+    <div style="display:flex;align-items:center;border-bottom:1.5px solid var(--border);">
+      <input type="text" id="searchInput" placeholder="Search by reference number, name or destination…" style="flex:1;border:none;padding:1rem 1.25rem;font-size:.9rem;font-family:'Montserrat',sans-serif;outline:none;" oninput="doSearch()">
+      <button onclick="hideSearch()" style="padding:.875rem 1.25rem;background:var(--navy);border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.875rem;cursor:pointer;border-radius:0 16px 0 0;">Close ✕</button>
+    </div>
+    <div id="searchResults" style="padding:1.25rem;max-height:60vh;overflow-y:auto;"></div>
+  </div>
+</div>
+
+</div><!-- /content-inner -->
+</div><!-- /main-content -->
+</div><!-- /app-shell -->
+</div><!-- /mainApp -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════
+const SHEET_ID   = '1CkWPTkxrI-jFcTgwmH_tFCNIV2DgJRXE217Jd3wzaa0';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby3iSCBqoWZsmhpZUINp1V1CH1dAJyDBFnoV9r23lk3Aw1e79fvQMt6ZkpIdw-HrakT/exec';
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let user      = null;
+let step      = 1;
+let comps     = {hotel:false,transfer:false,car:false,visa:false};
+let airports  = [];
+let myTrips   = [];
+
+// ═══════════════════════════════════════════════════════
+//  GOOGLE SHEETS READER
+// ═══════════════════════════════════════════════════════
+const _cache = {};
+async function readSheet(tab){
+  if(_cache[tab]) return _cache[tab];
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}`;
+  try{
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.substring(47).slice(0,-2));
+    const cols = json.table.cols.map(c=>c.label).filter(Boolean);
+    const rows = json.table.rows.map(row=>{
+      const obj={};
+      cols.forEach((col,i)=>{
+        const cell=row.c[i];
+        obj[col]=cell?(cell.v!==null&&cell.v!==undefined?cell.v:''):'';
+      });
+      return obj;
+    }).filter(r=>Object.values(r).some(v=>v!==''));
+    _cache[tab]=rows;
+    return rows;
+  }catch(e){ return []; }
+}
+
+async function writeSheet(action, sheet, data){
+  try{
+    delete _cache[sheet];
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({action,sheet,...data})});
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════════════════════
+//  LOGIN
+// ═══════════════════════════════════════════════════════
+async function doLogin(){
+  const raw = (document.getElementById('loginUser').value||'').trim().toLowerCase();
+  if(!raw){ showLoginErr('Please enter your Genesis username.'); return; }
+  if(raw.includes('@')){ showLoginErr('Enter only the part before @genesis-analytics.com'); return; }
+  const email = raw+'@genesis-analytics.com';
+  const btn = document.getElementById('loginBtn');
+  btn.textContent='⏳ Loading…'; btn.disabled=true;
+  try{
+    const users = await readSheet('Users');
+    const found = users.find(u=>(u.UserID||'').toLowerCase()===email.toLowerCase());
+    loginAs({
+      email, name: found?(found.GoogleName||found.FullPassportName||raw):raw,
+      role: found?(found.Role||'Traveller'):'Traveller',
+      practice: found?(found.Practice||''):'',
+      passportName: found?(found.FullPassportName||''):'',
+      passportNum: found?(found.PassportNumber||''):'',
+      passportExp: found?(found.PassportExpiry||''):'',
+      passportCtry: found?(found.PassportCountry||''):'',
+      seat: found?(found.SeatingPreference||''):'',
+      emergency: found?(found.EmergencyContact||''):'',
+      emergPhone: found?(found.EmergencyPhone||''):'',
+      diet: found?(found.DietaryRequirements||''):'',
+      ffn: found?(found.FrequentFlyer||''):'',
+      medical: found?(found.MedicalNeeds||''):'',
+      prefilled: !!found,
+    });
+  }catch(e){ loginAs({email,name:raw,role:'Traveller',prefilled:false}); }
+}
+
+function loginManual(){
+  const raw=(document.getElementById('loginUser').value||'').trim()||'user';
+  const email=raw.includes('@')?raw:raw+'@genesis-analytics.com';
+  loginAs({email,name:raw,role:'Traveller',prefilled:false});
+}
+
+function loginAs(u){
+  user=u;
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  setupUI(u);
+  prefillForm(u);
+  loadMyTrips();
+  loadAirports();
+  loadManagerList();
+  checkUrlParams();
+}
+
+function setupUI(u){
+  const init=(u.name||'U').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const avEl=document.getElementById('userAvatar');
+  if(avEl) avEl.textContent=init;
+  const nameEl=document.getElementById('userPillName');
+  if(nameEl) nameEl.textContent=u.name;
+  const roleEl=document.getElementById('userRoleSide');
+  if(roleEl) roleEl.textContent=(u.role||'Traveller')+' · Genesis Analytics';
+  const h=new Date().getHours();
+  const g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('dashGreet').textContent=g+', '+u.name.split(' ')[0]+' 👋';
+  document.getElementById('dashRole').textContent=(u.role||'Traveller')+' · Genesis Analytics';
+}
+
+function showLoginErr(msg){
+  const el=document.getElementById('loginErr');
+  el.innerHTML=msg; el.style.display='flex';
+  document.getElementById('loginBtn').textContent='Continue →';
+  document.getElementById('loginBtn').disabled=false;
+}
+
+function doLogout(){
+  user=null;
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('loginScreen').style.display='block';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginBtn').textContent='Continue →';
+  document.getElementById('loginBtn').disabled=false;
+  document.getElementById('loginErr').style.display='none';
+}
+
+// ═══════════════════════════════════════════════════════
+//  URL ROUTING — agent/approval links
+// ═══════════════════════════════════════════════════════
+function checkUrlParams(){
+  const p=new URLSearchParams(window.location.search);
+  const ref=(p.get('ref')||'').trim().toUpperCase();
+  const agent=(p.get('agent')||'').trim().toLowerCase();
+  const action=(p.get('action')||'').trim().toLowerCase();
+  if(agent){ renderAgentPage(ref,agent); return; }
+  if(action==='approve'||action==='decline'){ renderApprovalPage(ref); return; }
+  showPage('dashboard');
+}
+
+// ═══════════════════════════════════════════════════════
+//  PAGE NAVIGATION
+// ═══════════════════════════════════════════════════════
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+id);
+  if(el) el.classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='dashboard') loadMyTrips();
+  if(id==='history')   renderHistory();
+  // Update active nav
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const navMap={dashboard:'nav-dashboard',form:'nav-form',history:'nav-history',quotes:'nav-quotes',approval:'nav-approval',documents:'nav-documents'};
+  const navEl=document.getElementById(navMap[id]);
+  if(navEl) navEl.classList.add('active');
+}
+
+function startNewRequest(){
+  step=1; comps={hotel:false,transfer:false,car:false,visa:false};
+  renderStepper(); renderStep();
+  showPage('form');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const el=document.getElementById('nav-form');
+  if(el) el.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════
+//  STEPPER
+// ═══════════════════════════════════════════════════════
+const STEP_LABELS=['Traveller','Trip Details','Components','Preferences','Review & Submit'];
+function renderStepper(){
+  const s=document.getElementById('stepper');
+  s.innerHTML=STEP_LABELS.map((lbl,i)=>{
+    const n=i+1;
+    const cls=n<step?'done':n===step?'active':'todo';
+    const lc=n===step?'active':'';
+    const line=i<STEP_LABELS.length-1?`<div class="st-line${n<step?' done':''}"></div>`:'';
+    return `<div class="st-node"><div class="st-circle ${cls}">${n<step?'✓':n}</div><div class="st-label ${lc}">${lbl}</div></div>${line}`;
+  }).join('');
+  document.getElementById('stepMeta').textContent=`Step ${step} of 5`;
+}
+
+function renderStep(){
+  for(let i=1;i<=5;i++) document.getElementById('s'+i).style.display=i===step?'block':'none';
+  if(step===5) buildReview();
+}
+
+function goStep(n){
+  if(n>step&&!validateStep(step)) return;
+  step=n; renderStepper(); renderStep(); window.scrollTo(0,0);
+}
+
+function validateStep(s){
+  if(s===1){
+    if(!gv('f_name'))     return alert('Please enter your full name.'),false;
+    if(!gv('f_mgr'))      return alert('Please enter your manager name.'),false;
+    if(!gv('f_mgremail')) return alert('Please enter your manager email.'),false;
+    if(!gv('f_emname'))   return alert('Please enter an emergency contact name.'),false;
+    if(!gv('f_emphone'))  return alert('Please enter an emergency contact phone.'),false;
+  }
+  if(s===2){
+    if(!gv('f_triptype'))  return alert('Please select a trip type.'),false;
+    if(!gv('f_dest'))      return alert('Please enter destination countries.'),false;
+    if(!gv('f1_from'))     return alert('Please enter departure airport.'),false;
+    if(!gv('f1_to'))       return alert('Please enter arrival airport.'),false;
+    if(!gv('f1_dep'))      return alert('Please enter a departure date.'),false;
+  }
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════
+//  FORM HELPERS
+// ═══════════════════════════════════════════════════════
+function gv(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
+function sv(id,val){ const el=document.getElementById(id); if(el&&val) el.value=val; }
+
+function prefillForm(u){
+  sv('f_email',u.email);
+  sv('f_practice',u.practice);
+  if(u.prefilled){
+    sv('f_name',u.passportName||u.name);
+    sv('f_ppname',u.passportName);
+    sv('f_ppnum',u.passportNum);
+    sv('f_ppexp',u.passportExp?u.passportExp.split('T')[0]:'');
+    sv('f_ppcountry',u.passportCtry);
+    sv('f_nationality',u.passportCtry);
+    sv('f_emname',u.emergency);
+    sv('f_emphone',u.emergPhone);
+    sv('f_seat',u.seat);
+    sv('f_diet',u.diet);
+    sv('f_ffn',u.ffn);
+    sv('f_medical',u.medical);
+    document.getElementById('prefillBanner').style.display='flex';
+    checkPP();
+  }
+  // Try to prefill manager from Requests
+  readSheet('Requests').then(rows=>{
+    const mine=rows.filter(r=>(r.TravellerEmail||'').toLowerCase()===u.email.toLowerCase());
+    if(mine.length){
+      const latest=[...mine].sort((a,b)=>(b.RequestID||'').localeCompare(a.RequestID||''))[0];
+      if(!gv('f_mgr'))      sv('f_mgr',latest.ApproverName||'');
+      if(!gv('f_mgremail')) sv('f_mgremail',latest.ApproverEmail||'');
+      if(!gv('f_code'))     sv('f_code',latest.ProjectCode||'');
+    }
+  });
+}
+
+function checkPP(){
+  const v=gv('f_ppexp'); if(!v) return;
+  const exp=new Date(v), six=new Date(); six.setMonth(six.getMonth()+6);
+  document.getElementById('ppWarn').style.display=exp<six?'block':'none';
+}
+
+function checkRisk(){
+  const dest=gv('f_dest').toLowerCase();
+  const hi=['iraq','syria','somalia','yemen','afghanistan','libya','sudan','south sudan'];
+  document.getElementById('riskBanner').style.display=hi.some(c=>dest.includes(c))?'flex':'none';
+}
+
+function updateLegs(){ document.getElementById('extraLegs').style.display=gv('f_triptype')==='Multi Stop'?'block':'none'; }
+function addLeg3(){ document.getElementById('leg3').style.display='block'; document.getElementById('addLeg3Btn').style.display='none'; }
+function removeLeg3(){ document.getElementById('leg3').style.display='none'; document.getElementById('addLeg3Btn').style.display=''; }
+
+function togComp(name){
+  comps[name]=!comps[name];
+  const btn=document.getElementById('tog_'+name);
+  btn.classList.toggle('on',comps[name]);
+  btn.querySelector('.tog-status').textContent=comps[name]?'✓ Included':'Not included';
+  const forms={hotel:'hotelForm',transfer:'transferForm',car:'carForm',visa:'visaForm'};
+  document.getElementById(forms[name]).style.display=comps[name]?'block':'none';
+  if(comps[name]) autoDates();
+}
+
+function autoDates(){
+  const dep=gv('f1_dep'), ret=gv('f1_ret');
+  if(dep){ sv('f_hotelin',dep); sv('f_transferdate',dep); sv('f_carpickup',dep); }
+  if(ret){ sv('f_hotelout',ret); sv('f_carreturn',ret); }
+}
+
+// ═══════════════════════════════════════════════════════
+//  AIRPORT AUTOCOMPLETE
+// ═══════════════════════════════════════════════════════
+async function loadAirports(){
+  if(airports.length) return;
+  try{
+    const rows=await readSheet('Airports');
+    airports=rows.filter(r=>r.AirportID&&r.Code_City_Country).map(r=>[r.AirportID,r.City||'',r.CountryName||'',r.Code_City_Country||'']);
+  }catch(e){}
+}
+
+function ac(inputId){
+  const q=gv(inputId).toLowerCase().trim();
+  const ddId='ac_'+inputId;
+  const dd=document.getElementById(ddId);
+  if(!q||q.length<2){ dd.style.display='none'; return; }
+  const res=airports.filter(([code,city,country,label])=>
+    code.toLowerCase().startsWith(q)||city.toLowerCase().includes(q)||country.toLowerCase().includes(q)||label.toLowerCase().includes(q)
+  ).slice(0,10);
+  if(!res.length){ dd.style.display='none'; return; }
+  dd.innerHTML=res.map(([code,city,country,label])=>`
+    <div class="ac-item" onclick="selectAc('${inputId}','${label.replace(/'/g,"\\'")}')">
+      <span class="ac-code">${code}</span><span class="ac-city">${city}</span><span class="ac-cty">${country}</span>
+    </div>`).join('');
+  dd.style.display='block';
+}
+
+function selectAc(inputId,label){
+  sv(inputId,label);
+  document.getElementById('ac_'+inputId).style.display='none';
+}
+
+document.addEventListener('click',e=>{
+  document.querySelectorAll('.ac-dd').forEach(d=>{ if(!d.parentElement.contains(e.target)) d.style.display='none'; });
+});
+
+// ═══════════════════════════════════════════════════════
+//  MANAGER DATALIST
+// ═══════════════════════════════════════════════════════
+async function loadManagerList(){
+  const rows=await readSheet('Requests');
+  const seen={},list=[];
+  rows.forEach(r=>{
+    const n=(r.ApproverName||'').trim(), em=(r.ApproverEmail||'').trim();
+    if(n&&!seen[n.toLowerCase()]){ seen[n.toLowerCase()]=1; list.push({n,em}); }
+  });
+  const dl=document.getElementById('mgrList');
+  if(dl) dl.innerHTML=list.map(m=>`<option value="${m.n}" data-email="${m.em}">`).join('');
+  // Auto-fill email when manager selected
+  document.getElementById('f_mgr').addEventListener('input',function(){
+    const opt=[...dl.options].find(o=>o.value.toLowerCase()===this.value.toLowerCase());
+    if(opt&&opt.dataset.email) sv('f_mgremail',opt.dataset.email);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  REVIEW SUMMARY
+// ═══════════════════════════════════════════════════════
+function buildReview(){
+  const compList=['Flights',...(comps.hotel?['Hotel']:[]),...(comps.transfer?['Transfers']:[]),...(comps.car?['Car Hire']:[]),...(comps.visa?['Visa Assistance']:[])].join(', ');
+  const rows=[
+    ['Traveller',gv('f_name')],['Email',gv('f_email')],
+    ['Manager',gv('f_mgr')+' ('+gv('f_mgremail')+')'],
+    ['Purpose',gv('f_purpose')||'—'],['Project Code',gv('f_code')],
+    ['Billing',gv('f_billing')],['Trip Type',gv('f_triptype')],
+    ['Destinations',gv('f_dest')],
+    ['Flight 1',gv('f1_from')+' → '+gv('f1_to')+' · '+gv('f1_dep')],
+    ['Components',compList],['Class',gv('f_class')],['Passengers',gv('f_pax')],
+  ];
+  document.getElementById('reviewBody').innerHTML=rows.map(([l,v])=>`
+    <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #EBEBEB;font-size:.8125rem;">
+      <span style="color:var(--muted);font-weight:600;">${l}</span>
+      <span style="font-weight:600;text-align:right;max-width:60%;">${v||'—'}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  SUBMIT REQUEST
+// ═══════════════════════════════════════════════════════
+async function submitRequest(){
+  if(!['ack1','ack2','ack3','ack4'].every(id=>document.getElementById(id).checked)){
+    document.getElementById('submitErr').innerHTML='Please acknowledge all items before submitting.';
+    document.getElementById('submitErr').style.display='flex'; return;
+  }
+  document.getElementById('submitErr').style.display='none';
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Submitting…'; btn.disabled=true;
+
+  const d=new Date();
+  const dateStr=`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let rand=''; for(let i=0;i<6;i++) rand+=chars[Math.floor(Math.random()*chars.length)];
+  const ref=`TRV-${dateStr}-${rand}`;
+
+  const compList=['Flights',...(comps.hotel?['Hotel']:[]),...(comps.transfer?['Transfers']:[]),...(comps.car?['Car Hire']:[]),...(comps.visa?['Visa Assistance']:[])].join(', ');
+
+  const row={
+    RequestID:ref, Timestamp:new Date().toISOString(), Creator:user.email,
+    TravellerName:gv('f_name'), TravellerEmail:gv('f_email'),
+    BookingOnBehalfOf:gv('f_behalf'), ProjectCode:gv('f_code'),
+    ToBePaidBy:gv('f_paidby'), BillingType:gv('f_billing'),
+    ApproverEmail:gv('f_mgremail'), ApproverName:gv('f_mgr'),
+    Practice:gv('f_practice'), DOB:gv('f_dob'),
+    PassportName:gv('f_ppname'), PassportNumber:gv('f_ppnum'),
+    PassportExpiry:gv('f_ppexp'), PassportCountry:gv('f_ppcountry'),
+    Nationality:gv('f_nationality'),
+    EmergencyContact:gv('f_emname'), EmergencyPhone:gv('f_emphone'),
+    SeatingPreference:gv('f_seat'), FrequentFlyer:gv('f_ffn'),
+    DietaryRequirements:gv('f_diet'), MedicalNeeds:gv('f_medical'),
+    OtherComments:gv('f_comments'), SingleOrMultiStop:gv('f_triptype'),
+    DestinationCountries:gv('f_dest'),
+    NeedFlights:true, NeedHotel:comps.hotel, NeedTransfers:comps.transfer, NeedCarHire:comps.car, NeedVisa:comps.visa,
+    f1_Type:gv('f1_type'), f1_From:gv('f1_from'), f1_To:gv('f1_to'),
+    f1_DepartureDate:gv('f1_dep'), f1_DepartureTime:gv('f1_deptime'),
+    f1_ReturnDate:gv('f1_ret'), f1_ReturnTime:gv('f1_rettime'),
+    f2_Type:gv('f2_type'), f2_From:gv('f2_from'), f2_To:gv('f2_to'),
+    f2_DepartureDate:gv('f2_dep'), f2_DepartureTime:gv('f2_deptime'),
+    f3_From:gv('f3_from'), f3_To:gv('f3_to'), f3_DepartureDate:gv('f3_dep'),
+    HotelCity:gv('f_hotelcity'), HotelCheckIn:gv('f_hotelin'), HotelCheckOut:gv('f_hotelout'),
+    HotelStars:gv('f_hotelstars'), RoomType:gv('f_roomtype'),
+    TransferPickup:gv('f_pickup'), TransferDropoff:gv('f_dropoff'), TransferDate:gv('f_transferdate'),
+    CarHireCity:gv('f_carcity'), CarHireType:gv('f_cartype'), CarHirePickup:gv('f_carpickup'), CarHireReturn:gv('f_carreturn'),
+    VisaNotes:gv('f_visanotes'), Status:'Submitted',
+    // legacy fields for email function
+    reference:ref, name:gv('f_name'), email:gv('f_email'), grade:'',
+    manager:gv('f_mgr'), managerEmail:gv('f_mgremail'),
+    purpose:gv('f_purpose'), costCode:gv('f_code'), components:compList,
+    from:gv('f1_from'), to:gv('f1_to'), departure:gv('f1_dep'), returnDate:gv('f1_ret'),
+    travelClass:gv('f_class'), passengers:gv('f_pax'),
+  };
+
+  await writeSheet('insert','Requests',{row});
+
+  myTrips.unshift(row);
+  document.getElementById('confirmRef').textContent=ref;
+  btn.textContent='Submit Request ✈️'; btn.disabled=false;
+  showPage('confirm');
+}
+
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD — TRIPS LIST
+// ═══════════════════════════════════════════════════════
+async function loadMyTrips(){
+  try{
+    const rows=await readSheet('Requests');
+    myTrips=rows.filter(r=>(r.Creator||r.TravellerEmail||'').toLowerCase()===user.email.toLowerCase());
+  }catch(e){ myTrips=[]; }
+  updateKPIs();
+  renderTripList(myTrips);
+}
+
+function updateKPIs(){
+  const active=['Submitted','Quoting','Quotes Ready','Awaiting Selection','Pending Approval','Approved','Booking in Progress'];
+  document.getElementById('kAll').textContent=myTrips.length;
+  document.getElementById('kActive').textContent=myTrips.filter(r=>active.includes(r.Status)).length;
+  document.getElementById('kPending').textContent=myTrips.filter(r=>['Awaiting Selection','Pending Approval'].includes(r.Status)).length;
+  document.getElementById('kDone').textContent=myTrips.filter(r=>r.Status==='Completed').length;
+  document.getElementById('kCancelled').textContent=myTrips.filter(r=>r.Status==='Cancelled').length;
+}
+
+function renderTripList(trips){
+  const el=document.getElementById('tripList');
+  if(!trips||!trips.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">✈️</div><div class="empty-title">No trips yet</div><div class="empty-sub">Submit your first travel request to get started.</div><button class="btn btn-primary" style="margin-top:1rem;" onclick="startNewRequest()">+ New Request</button></div>`;
+    return;
+  }
+  el.innerHTML=trips.map(r=>`
+    <div class="req-row" onclick="openTrip('${r.RequestID||''}')">
+      <div>
+        <div class="req-ref">${r.RequestID||'—'}</div>
+        <div class="req-meta">${r.DestinationCountries||'—'} · ${fmtDate(r.f1_DepartureDate)}</div>
+      </div>
+      <div style="text-align:right;">
+        ${statusPill(r.Status)}
+        <div style="font-size:.72rem;color:var(--muted);margin-top:3px;">${r.TravellerName||''}</div>
+      </div>
+    </div>`).join('');
+}
+
+function filterTrips(filter){
+  document.querySelectorAll('.kpi').forEach(k=>k.classList.remove('active'));
+  const active=['Submitted','Quoting','Quotes Ready','Awaiting Selection','Pending Approval','Approved','Booking in Progress'];
+  let f=myTrips;
+  if(filter==='active')    f=myTrips.filter(r=>active.includes(r.Status));
+  if(filter==='pending')   f=myTrips.filter(r=>['Awaiting Selection','Pending Approval'].includes(r.Status));
+  if(filter==='done')      f=myTrips.filter(r=>r.Status==='Completed');
+  if(filter==='cancelled') f=myTrips.filter(r=>r.Status==='Cancelled');
+  renderTripList(f);
+}
+
+function searchTrips(){
+  const q=document.getElementById('tripSearch').value.toLowerCase();
+  if(!q){ renderTripList(myTrips); return; }
+  renderTripList(myTrips.filter(r=>(r.RequestID||'').toLowerCase().includes(q)||(r.DestinationCountries||'').toLowerCase().includes(q)||(r.TravellerName||'').toLowerCase().includes(q)));
+}
+
+async function openTrip(ref){
+  if(!ref) return;
+  // Load quotes for this trip and show comparison
+  showPage('quotes');
+  document.getElementById('quotesTitle').textContent='Quotes — '+ref;
+  document.getElementById('quotesSub').textContent='Compare options from Hamilton Travel and Sundown Travel';
+  await renderQuoteComparison(ref);
+}
+
+// ═══════════════════════════════════════════════════════
+//  QUOTE COMPARISON
+// ═══════════════════════════════════════════════════════
+async function renderQuoteComparison(ref){
+  const card=document.getElementById('quotesCard');
+  card.innerHTML='<div style="text-align:center;padding:2rem;"><div class="spinner" style="width:24px;height:24px;margin:0 auto;"></div><div style="margin-top:.75rem;font-size:.82rem;color:var(--muted);">Loading quotes…</div></div>';
+  const quotes=(await readSheet('Quotes')).filter(q=>(q.RequestID||'').toUpperCase()===(ref||'').toUpperCase());
+  if(!quotes.length){
+    card.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">No quotes yet</div><div class="empty-sub">Hamilton Travel and Sundown Travel have been notified. Quotes will appear here once submitted.</div></div>`;
+    return;
+  }
+  card.innerHTML=`
+    <div style="margin-bottom:1rem;font-size:.8rem;color:var(--muted);">Select your preferred option. Your manager will be notified for approval once you choose.</div>
+    <div style="overflow-x:auto;">
+    <table class="quote-table">
+      <thead><tr>
+        <th>Agency</th><th>Option</th><th>Component</th><th>Description</th>
+        <th>Price</th><th>Currency</th><th>Valid Until</th><th>Refundable</th><th>CO₂</th><th>Action</th>
+      </tr></thead>
+      <tbody>
+        ${quotes.map((q,i)=>`
+          <tr class="${q.IsSelected?'selected':''}" id="qrow_${i}">
+            <td><strong>${q.AgencyName||'—'}</strong><div style="font-size:.72rem;color:var(--muted);">${q.InternalRef||''}</div></td>
+            <td><span class="tag tag-grey">Option ${q.OptionNumber||i+1}</span></td>
+            <td>${q.Component||'—'}</td>
+            <td style="max-width:220px;font-size:.78rem;">${q.Description||q.Notes||'—'}</td>
+            <td><span class="price-big">${fmtPrice(q.TotalCost,q.MaxPrice)}</span></td>
+            <td>${q.Currency||'ZAR'}</td>
+            <td style="font-size:.78rem;">${fmtDate(q.ValidUntil)||'—'}</td>
+            <td>${q.Refundable?`<span class="tag ${q.Refundable==='Refundable'?'tag-green':'tag-amber'}">${q.Refundable}</span>`:'—'}</td>
+            <td>${q.CarbonKg?`<span class="co2-badge">🌱 ${q.CarbonKg} kg</span>`:'—'}</td>
+            <td>${q.IsSelected?`<span class="tag tag-green">✓ Selected</span>`:`<button class="btn btn-primary btn-sm" onclick="selectQuote('${q.QuoteID||''}','${ref}',${i})">Select</button>`}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+async function selectQuote(quoteId, ref, idx){
+  if(!confirm('Select this quote and notify your manager for approval?')) return;
+  // Update status in sheet
+  await writeSheet('update','Quotes',{matchCol:'QuoteID',matchVal:quoteId,patch:{IsSelected:true,Status:'Selected'}});
+  await writeSheet('update','Requests',{matchCol:'RequestID',matchVal:ref,patch:{Status:'Pending Approval',SelectedQuoteID:quoteId}});
+  delete _cache['Quotes']; delete _cache['Requests'];
+  await renderQuoteComparison(ref);
+}
+
+// ═══════════════════════════════════════════════════════
+//  HISTORY
+// ═══════════════════════════════════════════════════════
+function renderHistory(){
+  const q=(document.getElementById('histSearch')?.value||'').toLowerCase();
+  const st=(document.getElementById('histStatus')?.value||'').toLowerCase();
+  const body=document.getElementById('histBody');
+  let trips=[...myTrips];
+  if(q) trips=trips.filter(r=>(r.RequestID||'').toLowerCase().includes(q)||(r.DestinationCountries||'').toLowerCase().includes(q)||(r.TravellerName||'').toLowerCase().includes(q));
+  if(st) trips=trips.filter(r=>(r.Status||'').toLowerCase()===st);
+  if(!trips.length){ body.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">No trips found.</td></tr>`; return; }
+  body.innerHTML=trips.map(r=>`
+    <tr class="hist-row" onclick="openTrip('${r.RequestID||''}')">
+      <td><strong style="color:var(--navy);">${r.RequestID||'—'}</strong></td>
+      <td>${r.DestinationCountries||'—'}</td>
+      <td>${fmtDate(r.f1_DepartureDate)}</td>
+      <td>${r.TravellerName||'—'}</td>
+      <td>${statusPill(r.Status)}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openTrip('${r.RequestID||''}')">View Quotes</button></td>
+    </tr>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  AGENT QUOTE SUBMISSION PAGE
+// ═══════════════════════════════════════════════════════
+let agentOpts=[{component:'Flights',desc:'',price:'',maxPrice:'',currency:'ZAR',refundable:'',validUntil:'',co2:'',notes:''}];
+
+async function renderAgentPage(ref, agentSlug){
+  // Hide header new request / history for agents
+  document.getElementById('headerRight').innerHTML=`<div class="user-pill"><div class="avatar">A</div><span class="user-pill-name">${agentSlug}</span></div>`;
+  showPage('agent');
+  const el=document.getElementById('agentContent');
+  el.innerHTML='<div style="text-align:center;padding:2rem;"><div class="spinner" style="width:24px;height:24px;margin:0 auto;"></div></div>';
+  const agencyName=agentSlug.includes('hamilton')?'Hamilton Travel':'Sundown Travel';
+  let req=null;
+  if(ref){
+    const rows=await readSheet('Requests');
+    req=rows.find(r=>(r.RequestID||'').toUpperCase()===ref.toUpperCase())||null;
+  }
+  el.innerHTML=renderAgentForm(ref,agencyName,req);
+}
+
+function renderAgentForm(ref,agencyName,req){
+  const reqSummary=req?`
+    <div style="background:var(--green-lt);border:1.5px solid #AED68F;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
+      <div style="font-size:.7rem;font-weight:700;color:var(--green-dk);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.875rem;">Request Summary — Please verify before submitting</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.625rem .875rem;">
+        <div><div style="font-size:.7rem;color:#5f855f;text-transform:uppercase;letter-spacing:.03em;margin-bottom:2px;">Reference</div><div class="ref-badge" style="font-size:.8rem;">${ref}</div></div>
+        <div><div style="font-size:.7rem;color:#5f855f;text-transform:uppercase;margin-bottom:2px;">Traveller</div><div style="font-weight:700;font-size:.875rem;color:#14532d;">${req.TravellerName||'—'}</div></div>
+        <div><div style="font-size:.7rem;color:#5f855f;text-transform:uppercase;margin-bottom:2px;">Route</div><div style="font-weight:700;font-size:.875rem;color:#14532d;">${req.f1_From||'—'} → ${req.f1_To||'—'}</div></div>
+        <div><div style="font-size:.7rem;color:#5f855f;text-transform:uppercase;margin-bottom:2px;">Departure</div><div style="font-weight:700;font-size:.875rem;color:#14532d;">${fmtDate(req.f1_DepartureDate)||'—'}${req.f1_ReturnDate?' → '+fmtDate(req.f1_ReturnDate):''}</div></div>
+        <div><div style="font-size:.7rem;color:#5f855f;text-transform:uppercase;margin-bottom:2px;">Components</div><div style="font-weight:700;font-size:.875rem;color:#14532d;">${[req.NeedFlights&&'✈️ Flights',req.NeedHotel&&'🏨 Hotel',req.NeedTransfers&&'🚐 Transfers',req.NeedCarHire&&'🚗 Car Hire'].filter(Boolean).join(' ')}</div></div>
+        <div><div style="font-size:.7rem;color:#5f855f;text-transform:uppercase;margin-bottom:2px;">Class</div><div style="font-weight:700;font-size:.875rem;color:#14532d;">${req.SeatingPreference||'Economy'}</div></div>
+      </div>
+    </div>`:'<div class="info info-amber" style="margin-bottom:1rem;">⚠️ No reference provided — submitting a general quote.</div>';
+
+  return `
+    <div style="background:linear-gradient(135deg,var(--navy),var(--navy-soft));border-radius:14px;padding:1.5rem;margin-bottom:1rem;color:#fff;">
+      <div style="font-size:.7rem;font-weight:700;opacity:.5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;">Quote Submission Portal</div>
+      <div style="font-size:1.25rem;font-weight:800;">${agencyName}</div>
+      <div style="font-size:.8rem;opacity:.65;margin-top:.25rem;">Submit your competitive quote for this travel request</div>
+    </div>
+    <div class="card">
+      ${reqSummary}
+      <div class="sec-h">Your Quote</div>
+      <div class="sec-sub" style="margin-bottom:1rem;">Complete all fields and submit. You can provide up to 5 options — each will be listed separately for the traveller to compare.</div>
+      <div class="fg"><label>Your Internal Reference <span class="req">*</span></label><input type="text" id="aq_intref" placeholder="e.g. SUN-2026-00456"></div>
+      <div id="agentOptsList"></div>
+      <div style="display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap;">
+        <button class="btn btn-outline btn-sm" id="addOptBtn" onclick="addAgentOpt()">+ Add Another Option</button>
+        <button class="btn btn-primary" onclick="submitAgentQuote('${ref||''}','${agencyName}')">Submit Quote →</button>
+      </div>
+    </div>`;
+}
+
+function renderAgentOpts(){
+  const el=document.getElementById('agentOptsList');
+  if(!el) return;
+  el.innerHTML=agentOpts.map((opt,i)=>`
+    <div class="opt-block">
+      <div class="opt-head">
+        <div class="opt-num">Option ${i+1}</div>
+        ${agentOpts.length>1?`<button class="btn btn-ghost btn-sm" onclick="removeAgentOpt(${i})">Remove</button>`:''}
+      </div>
+      <div class="form-grid">
+        <div class="fg full"><label>Component Quoted <span class="req">*</span></label>
+          <select id="aq_comp_${i}"><option>Flights</option><option>Hotel</option><option>Transfers</option><option>Car Hire</option><option>Flights + Hotel</option><option>Flights + Hotel + Transfers</option><option>Full Package</option></select></div>
+        <div class="fg full"><label>Quote Description <span class="req">*</span></label>
+          <textarea id="aq_desc_${i}" rows="3" placeholder="e.g. Return flights JNB–NBO on Kenya Airways. Dep 15 Aug 10:30, Ret 20 Aug 15:45. Economy class. 1×23kg bag included."></textarea></div>
+        <div class="fg"><label>Quote Price <span class="req">*</span></label><input type="number" id="aq_price_${i}" placeholder="e.g. 4500"></div>
+        <div class="fg"><label>Max Price (if range)</label><input type="number" id="aq_maxprice_${i}" placeholder="e.g. 5200"></div>
+        <div class="fg"><label>Currency</label><select id="aq_currency_${i}"><option>ZAR</option><option>USD</option><option>EUR</option><option>GBP</option><option>KES</option></select></div>
+        <div class="fg"><label>Quote Valid Until</label><input type="date" id="aq_valid_${i}"></div>
+        <div class="fg"><label>Refundable <span class="req">*</span></label><select id="aq_refund_${i}"><option value="">Select…</option><option>Refundable</option><option>Non-Refundable</option><option>Partially Refundable</option></select></div>
+        <div class="fg"><label>Carbon Emissions (kg CO₂e)</label><input type="number" id="aq_co2_${i}" placeholder="e.g. 285"></div>
+        <div class="fg full"><label>Notes</label><textarea id="aq_notes_${i}" rows="2" placeholder="Any important information not captured above…"></textarea></div>
+      </div>
+    </div>`).join('');
+  const addBtn=document.getElementById('addOptBtn');
+  if(addBtn) addBtn.disabled=agentOpts.length>=5;
+}
+
+function addAgentOpt(){
+  if(agentOpts.length>=5) return;
+  agentOpts.push({component:'Flights',desc:'',price:'',maxPrice:'',currency:'ZAR',refundable:'',validUntil:'',co2:'',notes:''});
+  renderAgentOpts();
+}
+
+function removeAgentOpt(i){
+  agentOpts.splice(i,1); renderAgentOpts();
+}
+
+async function submitAgentQuote(ref, agencyName){
+  const intRef=(document.getElementById('aq_intref')?.value||'').trim();
+  if(!intRef){ alert('Please enter your internal reference number.'); return; }
+  // Collect all options
+  const opts=agentOpts.map((_,i)=>({
+    QuoteID:`QUO-${Date.now()}-${i}`,
+    RequestID:ref,
+    AgencyName:agencyName,
+    InternalRef:intRef,
+    OptionNumber:i+1,
+    Component:document.getElementById(`aq_comp_${i}`)?.value||'Flights',
+    Description:document.getElementById(`aq_desc_${i}`)?.value||'',
+    TotalCost:document.getElementById(`aq_price_${i}`)?.value||'',
+    MaxPrice:document.getElementById(`aq_maxprice_${i}`)?.value||'',
+    Currency:document.getElementById(`aq_currency_${i}`)?.value||'ZAR',
+    ValidUntil:document.getElementById(`aq_valid_${i}`)?.value||'',
+    Refundable:document.getElementById(`aq_refund_${i}`)?.value||'',
+    CarbonKg:document.getElementById(`aq_co2_${i}`)?.value||'',
+    Notes:document.getElementById(`aq_notes_${i}`)?.value||'',
+    Status:'Submitted', IsSelected:false, Timestamp:new Date().toISOString(),
+  }));
+  const valid=opts.filter(o=>o.Description&&o.TotalCost&&o.Refundable);
+  if(!valid.length){ alert('Please complete at least one option (description, price, and refundable status required).'); return; }
+  for(const opt of valid) await writeSheet('insert','Quotes',{row:opt});
+  // Update request status
+  if(ref) await writeSheet('update','Requests',{matchCol:'RequestID',matchVal:ref,patch:{Status:'Quotes Ready'}});
+  document.getElementById('agentContent').innerHTML=`
+    <div class="card" style="text-align:center;padding:3rem 2rem;">
+      <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+      <div style="font-size:1.25rem;font-weight:800;color:var(--navy);margin-bottom:.5rem;">Quote Submitted!</div>
+      <div style="font-size:.875rem;color:var(--muted);line-height:1.6;">${valid.length} option(s) submitted for reference <strong>${ref}</strong>. The traveller will be notified to review and select their preferred option.</div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  MANAGER APPROVAL PAGE
+// ═══════════════════════════════════════════════════════
+async function renderApprovalPage(ref){
+  document.getElementById('headerRight').innerHTML=`<div class="user-pill"><div class="avatar">M</div><span class="user-pill-name">Manager</span></div>`;
+  showPage('approval');
+  const el=document.getElementById('approvalContent');
+  el.innerHTML='<div style="text-align:center;padding:2rem;"><div class="spinner" style="width:24px;height:24px;margin:0 auto;"></div></div>';
+  const [requests,quotes]=[await readSheet('Requests'),await readSheet('Quotes')];
+  const req=requests.find(r=>(r.RequestID||'').toUpperCase()===(ref||'').toUpperCase());
+  const tripQuotes=quotes.filter(q=>(q.RequestID||'').toUpperCase()===(ref||'').toUpperCase());
+  if(!req){ el.innerHTML='<div class="card"><div class="empty"><div class="empty-icon">❌</div><div class="empty-title">Request not found</div><div class="empty-sub">Reference '+ref+' could not be found.</div></div></div>'; return; }
+  const selectedQ=tripQuotes.find(q=>q.IsSelected||q.Status==='Selected');
+  el.innerHTML=`
+    <div class="view-hero">
+      <div class="vhero-label">Manager Approval Required</div>
+      <div style="font-size:1.2rem;font-weight:800;margin:.25rem 0;">Travel Request Approval</div>
+      <div><span class="ref-badge" style="background:rgba(114,168,78,.2);border-color:rgba(114,168,78,.5);">${ref}</span></div>
+      <div class="detail-grid">
+        <div><div class="dc-label">Traveller</div><div class="dc-val">${req.TravellerName||'—'}</div></div>
+        <div><div class="dc-label">Route</div><div class="dc-val">${req.f1_From||'—'} → ${req.f1_To||'—'}</div></div>
+        <div><div class="dc-label">Departure</div><div class="dc-val">${fmtDate(req.f1_DepartureDate)||'—'}${req.f1_ReturnDate?' → '+fmtDate(req.f1_ReturnDate):''}</div></div>
+        <div><div class="dc-label">Purpose</div><div class="dc-val">${req.Purpose||req.OtherComments||'—'}</div></div>
+        <div><div class="dc-label">Project Code</div><div class="dc-val">${req.ProjectCode||'—'}</div></div>
+        <div><div class="dc-label">Billing</div><div class="dc-val">${req.BillingType||'—'}</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
+        <div class="sec-h">Quotes Received</div>
+        <span style="font-size:.75rem;color:var(--orange);font-weight:600;">You may override the traveller's selection</span>
+      </div>
+      <div class="sec-sub" style="margin-bottom:1rem;">The traveller's preferred option is highlighted. Review all options and select a different one if appropriate before approving.</div>
+      ${tripQuotes.length?`
+      <div style="overflow-x:auto;">
+      <table class="quote-table">
+        <thead><tr><th>Agency</th><th>Option</th><th>Component</th><th>Description</th><th>Price</th><th>CO₂</th><th>Refundable</th><th>Action</th></tr></thead>
+        <tbody>
+          ${tripQuotes.map((q,i)=>`
+            <tr class="${(q.IsSelected||q.Status==='Selected')?'selected':''}" id="aqrow_${i}">
+              <td><strong>${q.AgencyName||'—'}</strong><div style="font-size:.72rem;color:var(--muted);">${q.InternalRef||''}</div></td>
+              <td><span class="tag tag-grey">Option ${q.OptionNumber||i+1}</span>${(q.IsSelected||q.Status==='Selected')?'<br><span class="tag tag-green" style="margin-top:3px;">⭐ Traveller\'s Choice</span>':''}</td>
+              <td>${q.Component||'—'}</td>
+              <td style="max-width:200px;font-size:.78rem;">${q.Description||q.Notes||'—'}</td>
+              <td><span class="price-big">${fmtPrice(q.TotalCost,q.MaxPrice)} ${q.Currency||'ZAR'}</span></td>
+              <td>${q.CarbonKg?`<span class="co2-badge">🌱 ${q.CarbonKg} kg</span>`:'—'}</td>
+              <td>${q.Refundable?`<span class="tag ${q.Refundable==='Refundable'?'tag-green':'tag-amber'}">${q.Refundable}</span>`:'—'}</td>
+              <td><button class="btn btn-outline btn-sm" onclick="mgrSelectQuote('${q.QuoteID||''}','${ref}',${i})">Select this option</button></td>
+            </tr>`).join('')}
+        </tbody>
+      </table></div>`:`<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">No quotes yet</div><div class="empty-sub">Quotes will appear here once submitted by the agencies.</div></div>`}
+    </div>
+    <div class="card">
+      <div class="sec-h" style="margin-bottom:1rem;">Approval Decision</div>
+      <div class="fg full"><label>Comments (optional)</label><textarea id="mgrComments" rows="3" placeholder="Add any notes or conditions for this approval…"></textarea></div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem;">
+        <button class="btn btn-primary" onclick="mgrDecide('${ref}','Approved')">✅ Approve Request</button>
+        <button class="btn btn-danger" onclick="mgrDecide('${ref}','Rejected')">❌ Reject Request</button>
+        <button class="btn btn-ghost" onclick="mgrDecide('${ref}','Revision Required')">🔄 Send Back for Revision</button>
+      </div>
+    </div>`;
+}
+
+async function mgrSelectQuote(quoteId, ref, idx){
+  await writeSheet('update','Quotes',{matchCol:'QuoteID',matchVal:quoteId,patch:{IsSelected:true,Status:'Manager Selected'}});
+  delete _cache['Quotes'];
+  await renderApprovalPage(ref);
+}
+
+async function mgrDecide(ref, decision){
+  const comments=(document.getElementById('mgrComments')?.value||'').trim();
+  const statusMap={'Approved':'Approved','Rejected':'Cancelled','Revision Required':'Submitted'};
+  await writeSheet('update','Requests',{matchCol:'RequestID',matchVal:ref,patch:{Status:statusMap[decision]||decision}});
+  await writeSheet('insert','Approvals',{row:{
+    ApprovalID:'APR-'+Date.now(),RequestID:ref,
+    ApproverEmail:user?user.email:'manager',Decision:decision,
+    Comments:comments,Timestamp:new Date().toISOString()
+  }});
+  delete _cache['Requests']; delete _cache['Approvals'];
+  document.getElementById('approvalContent').innerHTML=`
+    <div class="card" style="text-align:center;padding:3rem 2rem;">
+      <div style="font-size:3rem;margin-bottom:1rem;">${decision==='Approved'?'✅':decision==='Rejected'?'❌':'🔄'}</div>
+      <div style="font-size:1.25rem;font-weight:800;color:var(--navy);margin-bottom:.5rem;">Decision Recorded: ${decision}</div>
+      <div style="font-size:.875rem;color:var(--muted);">Reference <strong>${ref}</strong> has been marked as <strong>${decision}</strong>. The traveller will be notified.</div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  SEARCH
+// ═══════════════════════════════════════════════════════
+function showSearch(){ const el=document.getElementById('searchOverlay'); el.style.display='flex'; document.getElementById('searchInput').focus(); }
+function hideSearch(){ document.getElementById('searchOverlay').style.display='none'; }
+function doSearch(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase().trim();
+  const el=document.getElementById('searchResults');
+  if(!q){ el.innerHTML='<div class="empty" style="padding:1.5rem;"><div class="empty-sub">Type to search…</div></div>'; return; }
+  const found=myTrips.filter(r=>(r.RequestID||'').toLowerCase().includes(q)||(r.DestinationCountries||'').toLowerCase().includes(q)||(r.TravellerName||'').toLowerCase().includes(q));
+  if(!found.length){ el.innerHTML='<div class="empty" style="padding:1.5rem;"><div class="empty-sub">No results found.</div></div>'; return; }
+  el.innerHTML=found.map(r=>`
+    <div class="req-row" style="border-radius:8px;border:1px solid var(--border);margin-bottom:.5rem;" onclick="hideSearch();openTrip('${r.RequestID||''}')">
+      <div><div class="req-ref">${r.RequestID}</div><div class="req-meta">${r.DestinationCountries||'—'} · ${fmtDate(r.f1_DepartureDate)}</div></div>
+      <div>${statusPill(r.Status)}</div>
+    </div>`).join('');
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') hideSearch(); });
+
+// ═══════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════
+function statusPill(s){
+  const m={'Draft':'sp-draft','Submitted':'sp-submitted','Quoting':'sp-quoting','Quotes Ready':'sp-ready','Awaiting Selection':'sp-selecting','Pending Approval':'sp-approval','Approved':'sp-approved','Booking in Progress':'sp-booking','Completed':'sp-done','Cancelled':'sp-cancelled'};
+  return `<span class="sp ${m[s]||'sp-draft'}">${s||'Draft'}</span>`;
+}
+
+function fmtDate(d){
+  if(!d) return '—';
+  try{ return new Date(d).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}); }
+  catch{ return String(d).split('T')[0]||'—'; }
+}
+
+function fmtPrice(price,maxPrice){
+  if(!price) return '—';
+  const p=Number(price).toLocaleString('en-ZA');
+  if(maxPrice&&Number(maxPrice)>Number(price)) return `${p} – ${Number(maxPrice).toLocaleString('en-ZA')}`;
+  return p;
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('loginUser').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+  // Check if URL has agent/approval params — if so skip login for those views
+  const p=new URLSearchParams(window.location.search);
+  if(p.get('agent')||p.get('action')){
+    // Show app shell without requiring login
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    user={email:'guest@genesis-analytics.com',name:'Guest',role:'Guest'};
+    setupUI(user);
+    checkUrlParams();
+  }
+  // Render agent opts on page load
+  renderAgentOpts();
+});
+</script>
+</body>
+</html>
